@@ -67,7 +67,6 @@ public class Main {
 		
 		Node n = new Node(key, value);
 		tree.add(n);
-		tree.autobalance(n);
 	}
 
 	private static int menu() {

@@ -99,7 +99,7 @@ public class Tree {
 	 
 	    // Process left child
 	    print(root.getLeft(), space);
-	}
+	}//codigo tomado de : https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
 	
 	public Node getMin(Node current){
 		if (current.getLeft() == null) {
@@ -217,7 +217,8 @@ public class Tree {
 			case 2: 
 				
 				dad = current.getLeft();
-				
+				dad.setDad(current.getDad());
+				current.setDad(dad);
 				if(dad.getRight()!=null) {
 					current.setLeft(dad.getRight());
 				}else {
@@ -230,7 +231,8 @@ public class Tree {
 				break;
 			case -2:
 				 dad = current.getRight();
-				
+				 dad.setDad(current.getDad());
+				 current.setDad(dad);
 				if(dad.getLeft()!=null) {
 					current.setRight(dad.getLeft());
 				}else {

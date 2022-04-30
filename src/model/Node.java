@@ -17,7 +17,7 @@ public class Node <K,V>{
 		this.value = value;
 	}
 	
-	public void insert(Node node) {
+	public void insert(Node<K, V> node) {
 		if((Integer) node.getKey()< (Integer)this.key) {
 			//insertar a la izquierda
 			if(this.left == null) {
@@ -42,8 +42,8 @@ public class Node <K,V>{
 		return dad;
 	}
 
-	private void setDad(Node<K, V> node) {
-		// TODO Auto-generated method stub
+	public void setDad(Node<K, V> node) {
+		dad = node;
 		
 	}
 
