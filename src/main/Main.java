@@ -2,22 +2,43 @@ package main;
 
 import java.util.Scanner;
 
+import control.MainWindow;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Node;
 import model.Tree;
 
-public class Main {
+public class Main extends Application{
 
 	static Tree tree = new Tree();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
+		loader.setController(new MainWindow());
+		Parent parent = (Parent) loader.load();
+		Stage stage = new Stage();
+		Scene scene = new Scene(parent);
+		stage.setTitle("AVL Tree Search");
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	public static void pruebaTree() {
 		System.out.println("Select an option to do in your tree:");
 		int op;
 		do {
 			op=menu();
 			send(op);
 		}while(op!=0);
-
 	}
 
 	private static void send(int op) {
@@ -73,5 +94,7 @@ public class Main {
 	"3: For print the values in your tree\n");
 		return sc.nextInt();
 	}
+
+	
 
 }
