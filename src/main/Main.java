@@ -65,8 +65,7 @@ public class Main {
 		System.out.print("Write the value for the node\n");
 		String value = sc.nextLine();
 		
-		Node n = new Node(key, value);
-		tree.add(n);
+		tree.insert(key,value);
 	}
 
 	private static int menu() {

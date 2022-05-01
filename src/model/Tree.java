@@ -1,16 +1,40 @@
 package model;
 
-public class Tree {
+public class Tree<K,V> {
 
-	private Node root;
-	private final static int COUNT = 10;
+	private Node<K,V> root;
+	private final static int COUNT = 15;
 
-	public void add(Node node) {
-		if (root == null) {
-			root =node ;
+	public void insert(K key, V value) {
+		Node node = new Node(key,value);
+		
+		if(root == null) {
+			root = node;
 		} else {
-			root.insert(node);
-			autobalance(node);
+			insert(node, root);
+			autoBalance(node);
+		}
+
+	}
+	
+	private void insert(Node node, Node current) {
+		
+		if((Integer) node.getKey() < (Integer) current.getKey()) {
+			if(current.getLeft() == null) {
+				current.setLeft(node);
+				node.setDad(current);
+				return;
+			}
+			insert(node,current.getLeft());
+		} else if((Integer) node.getKey() > (Integer) current.getKey()) {
+			if(current.getRight() == null) {
+				current.setRight(node);
+				node.setDad(current);
+				return;
+			}
+			insert(node,current.getRight());
+		} else {
+			throw new IllegalArgumentException("The key is already in the tree");
 		}
 	}
 
@@ -200,52 +224,93 @@ public class Tree {
 		this.root = root;
 	}
 
-	public int weight(Node root2) {
-		return root2.calculateWeightR();
+	public int height(Node root2) {
+		return root2.calculateHeightR();
 	}
 
-	
-	public Node autobalance(Node current) {
-		if(current==null) {
-			return null;
+	public void autoBalance(Node current) {
+		if(current == null) {
+			return;
 		}
-		int balance = current.balanced();
+		balance(current);
+		autoBalance(current.getDad());
+	}
+	
+	public Node balance(Node node) {
 		
-		Node dad=null;
+		int nodeBalance = getBalance(node);
+		System.out.println("Balance: "+nodeBalance);
+		
+		if(nodeBalance == 2) {
+			Node nodeRight = node.getRight();
+			int nodeRightBalance = getBalance(nodeRight);
+			
 
-		switch (balance) {
-			case 2: 
-				
-				dad = current.getLeft();
-				dad.setDad(current.getDad());
-				current.setDad(dad);
-				if(dad.getRight()!=null) {
-					current.setLeft(dad.getRight());
-				}else {
-					current.setLeft(null);
-				}
-				dad.setRight(current);
-				if(current==root) {
-					root=dad;
-				}
-				break;
-			case -2:
-				 dad = current.getRight();
-				 dad.setDad(current.getDad());
-				 current.setDad(dad);
-				if(dad.getLeft()!=null) {
-					current.setRight(dad.getLeft());
-				}else {
-					current.setRight(null);
-				}
-				dad.setLeft(current);
-				if(current==root) {
-					root=dad;
-				}
-				break;
+			if(nodeRightBalance == 1 || nodeRightBalance == 0) {
+				node = leftRotate(node);
+			} else if(nodeRightBalance == -1) {
+				node.setRight(rightRotate(nodeRight));
+				node = leftRotate(node);
 			}
-		return autobalance(current.getDad());
+			
+		} else if(nodeBalance == -2) {
+			Node nodeLeft = node.getLeft();
+			int nodeLeftBalance = getBalance(nodeLeft);
+
+
+			if(nodeLeftBalance == -1 || nodeLeftBalance == 0) {
+				node = rightRotate(node);
+			} else if(nodeLeftBalance == 1) {
+				node.setLeft(leftRotate(nodeLeft));
+				node = rightRotate(node);
+			}
+		}
 		
+		return node;
+	}
+	
+	private Node leftRotate(Node node) {
+		
+		Node right = node.getRight();
+		
+		if(node == root) {
+			root = right;
+		}
+		
+		node.setRight(right.getLeft());
+		right.setLeft(node);
+
+		return right;
+	}
+	
+	private Node rightRotate(Node node) {
+		
+		Node left = node.getLeft();
+		
+		if(node == root) {
+			root = left;
+		}
+		
+		node.setLeft(left.getRight());
+		left.setRight(node);
+		
+		
+		
+		return left;
+	}
+	
+	public int getHeight(Node node) {
+		if(node == null) {
+			return 0;
+		}
+		return 1 + (Math.max(getHeight(node.getLeft()),getHeight(node.getRight())));
+	}
+	
+	public int getBalance(Node node) {
+		Node left = node.getLeft();
+		Node right = node.getRight();
+		
+		return getHeight(right) - getHeight(left);
 	}
 
 }

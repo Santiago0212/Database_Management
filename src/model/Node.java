@@ -17,26 +17,7 @@ public class Node <K,V>{
 		this.value = value;
 	}
 	
-	public void insert(Node<K, V> node) {
-		if((Integer) node.getKey()< (Integer)this.key) {
-			//insertar a la izquierda
-			if(this.left == null) {
-				this.left = node;
-				node.setDad(this);
-			}else {
-				this.left.insert(node);
-			}
-			
-		}else {
-			//insertar a la derecha
-			if(this.right == null) {
-				this.right = node;
-				node.setDad(this);
-			}else {
-				this.right.insert(node);
-			}
-		}
-	}
+	
 	
 	public Node<K, V> getDad() {
 		return dad;
@@ -72,23 +53,23 @@ public class Node <K,V>{
 		this.right = right;
 	}
 	
-	public int calculateWeightR() {
+	public int calculateHeightR() {
 		if(right==null) {
 			return 0;
 		}
 		
-		return 1+right.calculateWeightR();
+		return 1+right.calculateHeightR();
 	}
 	
-	public int calculateWeightL() {
+	public int calculateHeightL() {
 		if(left==null) {
 			return 0;
 		}
 		
-		return 1+left.calculateWeightL();
+		return 1+left.calculateHeightL();
 	}
 	
-	public int balanced() {
-		return calculateWeightL()-calculateWeightR();
+	public int getBalance() {
+		return calculateHeightR()-calculateHeightL();
 	}
 }
