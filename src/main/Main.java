@@ -8,12 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Node;
 import model.Tree;
 
 public class Main extends Application{
 
-	static Tree tree = new Tree();
+	static Tree<Integer, String> tree = new Tree<Integer, String>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {

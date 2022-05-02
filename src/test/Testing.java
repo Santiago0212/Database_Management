@@ -1,20 +1,20 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
+/*import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Test;
+import org.junit.Test;*/
 
 import model.Node;
 import model.Tree;
 
 public class Testing {
 	
-	private Tree tree = new Tree();
-	private Node  node;
+	private Tree<?, ?> tree = new Tree();
+	private Node<?, ?>  node;
 	
-	public void setupStage1() {
+	/*public void setupStage1() {
 		node = new Node(5,"w");
 		tree.add(5,"w");
 	}
@@ -38,5 +38,5 @@ public class Testing {
 		assertNotNull(tree.triggerSearch((int) node.getKey()));
 		setupStage3();
 		assertNull(tree.triggerSearch((int) node.getKey()));
-	}
+	}*/
 }

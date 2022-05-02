@@ -6,7 +6,7 @@ public class Tree<K,V> {
 	private final static int COUNT = 15;
 
 	public void insert(K key, V value) {
-		Node node = new Node(key,value);
+		Node<K, V> node = new Node<K, V>(key,value);
 		
 		if(root == null) {
 			root = node;
@@ -17,7 +17,7 @@ public class Tree<K,V> {
 
 	}
 	
-	private void insert(Node node, Node current) {
+	private void insert(Node<K, V> node, Node<K, V> current) {
 		
 		if((Integer) node.getKey() < (Integer) current.getKey()) {
 			if(current.getLeft() == null) {
@@ -44,7 +44,7 @@ public class Tree<K,V> {
 	}
 
 	// Recursivo
-	public void inorder(Node node) {
+	public void inorder(Node<K, V> node) {
 		// Caso base
 		if (node == null) {
 			return;
@@ -56,12 +56,12 @@ public class Tree<K,V> {
 		inorder(node.getRight());
 	}
 
-	public Node triggerSearch(int key) {
+	public Node<K, V> triggerSearch(int key) {
 		return search(root, key);
 	}
 
 	// Recursivo
-	public Node search(Node node, int key) {
+	public Node<K, V> search(Node<K, V> node, int key) {
 		// Caso base
 		if (node == null) {
 			return null;
@@ -85,7 +85,7 @@ public class Tree<K,V> {
 		System.out.println(level);
 	}
 
-	public int getMaxLevel(Node node, int level) {
+	public int getMaxLevel(Node<K, V> node, int level) {
 
 		if (node == null) {
 			return level-1;
@@ -103,7 +103,7 @@ public class Tree<K,V> {
 		print(root,1);
 	}
 	
-	private void print(Node root, int space)
+	private void print(Node<K, V> root, int space)
 	{
 	    // Base case
 	    if (root == null)
@@ -126,7 +126,7 @@ public class Tree<K,V> {
 	    print(root.getLeft(), space);
 	}//codigo tomado de : https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
 	
-	public Node getMin(Node current){
+	public Node<K, V> getMin(Node<K, V> current){
 		if (current.getLeft() == null) {
 			return current;
 		} else {
@@ -134,7 +134,7 @@ public class Tree<K,V> {
 		}
 	}
 	
-	public Node getMax(Node current) {
+	public Node<K, V> getMax(Node<K, V> current) {
 		if (current.getRight() == null) {
 			return current;
 		}else {
@@ -148,7 +148,7 @@ public class Tree<K,V> {
 		}
 	}
 	
-	public Node delete(Node current, int key){
+	public Node<K, V> delete(Node<K, V> current, int key){
 		
 		if ((Integer) current.getKey() == key){
 			if (current.getLeft() == null && 
@@ -156,8 +156,8 @@ public class Tree<K,V> {
 				return null;
 			} else if (current.getLeft() != null && 
 					current.getRight() != null) {
-				Node succesor = getMin(current.getRight());
-				Node newRightTree = delete(current.getRight(), (Integer)succesor.getKey());
+				Node<K, V> succesor = getMin(current.getRight());
+				Node<K, V> newRightTree = delete(current.getRight(), (Integer)succesor.getKey());
 				
 				succesor.setLeft(current.getLeft());
 				succesor.setRight(newRightTree);
@@ -170,10 +170,10 @@ public class Tree<K,V> {
 			}
 			
 		} else if (key < (Integer)current.getKey()){
-			Node newLeftTree = delete(current.getLeft(), key);
+			Node<K, V> newLeftTree = delete(current.getLeft(), key);
 			current.setLeft(newLeftTree);
 		} else {
-			Node newRightTree = delete(current.getRight(), key);
+			Node<K, V> newRightTree = delete(current.getRight(), key);
 			current.setRight(newRightTree);
 		}
 		
@@ -186,7 +186,7 @@ public class Tree<K,V> {
 		return out;
 	}*/
 	
-	public String print(Node node) {
+	public String print(Node<K, V> node) {
 		String out = "";
 		boolean left = false;
 		boolean right = false;
@@ -217,34 +217,34 @@ public class Tree<K,V> {
 		return out;
 	}
 	
-	public Node getRoot() {
+	public Node<K, V> getRoot() {
 		return root;
 	}
 
-	public void setRoot(Node root) {
+	public void setRoot(Node<K, V> root) {
 		this.root = root;
 	}
 
-	public int height(Node root2) {
+	public int height(Node<K, V> root2) {
 		return root2.calculateHeightR();
 	}
 
-	public void autoBalance(Node current) {
+	public void autoBalance(Node<K, V> current) {
 		
 		if(current == null) {
 			return;
-		} if(current.dad == null) {
+		} if(current.getDad() == null) {
 			balance(root);
 			return;
 		} 
 		
-		if(current.dad.getLeft() != null) {
-			if(current == current.dad.getLeft()) {
-				current.dad.setLeft(balance(current));
+		if(current.getDad().getLeft() != null) {
+			if(current == current.getDad().getLeft()) {
+				current.getDad().setLeft(balance(current));
 			} 
-		} if(current.dad.getRight() != null) {
-			if(current == current.dad.getRight()) {
-				current.dad.setRight(balance(current));
+		} if(current.getDad().getRight() != null) {
+			if(current == current.getDad().getRight()) {
+				current.getDad().setRight(balance(current));
 			}
 		}
  
@@ -253,13 +253,13 @@ public class Tree<K,V> {
 		autoBalance(current.getDad());
 	}
 	
-	public Node balance(Node node) {
+	public Node<K, V> balance(Node<K, V> node) {
 		
 		int nodeBalance = getBalance(node);
 		System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
 		
 		if(nodeBalance == 2) {
-			Node nodeRight = node.getRight();
+			Node<K, V> nodeRight = node.getRight();
 			int nodeRightBalance = getBalance(nodeRight);
 			
 
@@ -271,7 +271,7 @@ public class Tree<K,V> {
 			}
 			
 		} else if(nodeBalance == -2) {
-			Node nodeLeft = node.getLeft();
+			Node<K, V> nodeLeft = node.getLeft();
 			int nodeLeftBalance = getBalance(nodeLeft);
 
 
@@ -286,9 +286,9 @@ public class Tree<K,V> {
 		return node;
 	}
 	
-	private Node leftRotate(Node node) {
+	private Node<K, V> leftRotate(Node<K, V> node) {
 		
-		Node right = node.getRight();
+		Node<K, V> right = node.getRight();
 		
 		if(node == root) {
 			root = right;
@@ -300,9 +300,9 @@ public class Tree<K,V> {
 		return right;
 	}
 	
-	private Node rightRotate(Node node) {
+	private Node<K, V> rightRotate(Node<K, V> node) {
 		
-		Node left = node.getLeft();
+		Node<K, V> left = node.getLeft();
 		
 		if(node == root) {
 			root = left;
@@ -316,16 +316,16 @@ public class Tree<K,V> {
 		return left;
 	}
 	
-	public int getHeight(Node node) {
+	public int getHeight(Node<K, V> node) {
 		if(node == null) {
 			return 0;
 		}
 		return 1 + (Math.max(getHeight(node.getLeft()),getHeight(node.getRight())));
 	}
 	
-	public int getBalance(Node node) {
-		Node left = node.getLeft();
-		Node right = node.getRight();
+	public int getBalance(Node<K, V> node) {
+		Node<K, V> left = node.getLeft();
+		Node<K, V> right = node.getRight();
 		
 		return getHeight(right) - getHeight(left);
 	}

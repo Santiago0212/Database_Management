@@ -7,7 +7,7 @@ public class Node <K,V>{
 	
 	
 	//Enlaces
-	public Node<K, V> dad;
+	private Node<K, V> dad;
 	private Node<K, V> left;
 	private Node<K, V> right;
 	
