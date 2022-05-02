@@ -13,13 +13,26 @@ import model.Tree;
 public class Main extends Application{
 
 	static Tree<Integer, String> tree = new Tree<Integer, String>();
+	static Tree<Character,String> abecedaryTree = new Tree <Character,String>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		pruebaTree();
+		//pruebaTree();
+		createTree();		
 		launch(args);
 	}
 	
+	private static void createTree() {
+		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
+		for(Character c: alphabet)
+		abecedaryTree.insert(c,"name");
+		int op;
+		do {
+			op=menu();
+			send(op,abecedaryTree);
+		}while(op!=0);
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
@@ -37,45 +50,45 @@ public class Main extends Application{
 		int op;
 		do {
 			op=menu();
-			send(op);
+			send(op,tree);
 		}while(op!=0);
 	}
 
-	private static void send(int op) {
+	private static void send(int op,Tree<?,?> t) {
 		switch(op) {
 			case 1:
 				add();
 				break;
 			case 2:
-				delete();
+				delete(t);
 				break;
 			case 3:
-				print();
+				print(t);
 				break;
 			case 4:
-				prube();
+				prube(t);
 				break;
 		}
 		
 	}
 
-	private static void prube() {
-		tree.triggerInorder();
+	private static void prube(Tree<?,?> t) {
+		t.triggerInorder();
 		//System.out.println(tree.weight(tree.getRoot()));
 		
 	}
 
-	private static void print() {
-		tree.print();
+	private static void print(Tree<?,?> t) {
+		t.print();
 		
 	}
 
-	private static void delete() {
+	private static void delete(Tree<?,?> t) {
 		System.out.print("Write the key for the node you want to delete\n");
 		int key = sc.nextInt();
 		sc.nextLine();
 		
-		tree.triggerDelete(key);
+		t.triggerDelete(key);
 		
 	}
 

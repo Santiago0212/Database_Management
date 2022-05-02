@@ -19,14 +19,14 @@ public class Tree<K extends Comparable <K>,V> {
 	
 	private void insert(Node<K, V> node, Node<K, V> current) {
 		
-		if(node.compareTo(current)==-1) {
+		if(node.compareTo(current)<=-1) {
 			if(current.getLeft() == null) {
 				current.setLeft(node);
 				node.setDad(current);
 				return;
 			}
 			insert(node,current.getLeft());
-		} else if(node.compareTo(current)==1) {
+		} else if(node.compareTo(current)>=1) {
 			if(current.getRight() == null) {
 				current.setRight(node);
 				node.setDad(current);
