@@ -9,12 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Person;
-import model.Tree;
+import model.AVLTree;
 
 public class Main extends Application{
 
-	static Tree<Integer, String> tree = new Tree<Integer, String>();
-	static Tree<Character,Tree<Integer,Person>> abecedaryTree = new Tree <Character,Tree<Integer,Person>>();
+	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
+	static AVLTree<Character,AVLTree<Integer,Person>> abecedaryTree = new AVLTree <Character,AVLTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Main extends Application{
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
-		abecedaryTree.insert(c,new Tree<Integer,Person>());
+		abecedaryTree.insert(c,new AVLTree<Integer,Person>());
 		int op;
 		do {
 			op=menu();
@@ -55,7 +55,7 @@ public class Main extends Application{
 		}while(op!=0);
 	}
 
-	private static void send(int op,Tree<?,?> t) {
+	private static void send(int op,AVLTree<?,?> t) {
 		switch(op) {
 			case 1:
 				add();
@@ -73,18 +73,18 @@ public class Main extends Application{
 		
 	}
 
-	private static void prube(Tree<?,?> t) {
+	private static void prube(AVLTree<?,?> t) {
 		t.triggerInorder();
 		//System.out.println(tree.weight(tree.getRoot()));
 		
 	}
 
-	private static void print(Tree<?,?> t) {
+	private static void print(AVLTree<?,?> t) {
 		t.print();
 		
 	}
 
-	private static void delete(Tree<?,?> t) {
+	private static void delete(AVLTree<?,?> t) {
 		System.out.print("Write the key for the node you want to delete\n");
 		int key = sc.nextInt();
 		sc.nextLine();

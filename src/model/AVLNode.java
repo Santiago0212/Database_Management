@@ -1,29 +1,29 @@
 package model;
 
-public class Node <K extends Comparable <K>,V>implements Comparable<Node<K,V>>{
+public class AVLNode <K extends Comparable <K>,V>implements Comparable<AVLNode<K,V>>{
 	
 	private K key;
 	private V value;
 	
 	
 	//Enlaces
-	private Node<K, V> dad;
-	private Node<K, V> left;
-	private Node<K, V> right;
+	private AVLNode<K, V> dad;
+	private AVLNode<K, V> left;
+	private AVLNode<K, V> right;
 	
 	
-	public Node(K key, V value) {
+	public AVLNode(K key, V value) {
 		this.key = key;
 		this.value = value;
 	}
 	
 	
 	
-	public Node<K, V> getDad() {
+	public AVLNode<K, V> getDad() {
 		return dad;
 	}
 
-	public void setDad(Node<K, V> node) {
+	public void setDad(AVLNode<K, V> node) {
 		dad = node;
 		
 	}
@@ -40,16 +40,16 @@ public class Node <K extends Comparable <K>,V>implements Comparable<Node<K,V>>{
 	public void setValue(V value) {
 		this.value = value;
 	}
-	public Node<K, V> getLeft() {
+	public AVLNode<K, V> getLeft() {
 		return left;
 	}
-	public void setLeft(Node<K, V> left) {
+	public void setLeft(AVLNode<K, V> left) {
 		this.left = left;
 	}
-	public Node<K, V> getRight() {
+	public AVLNode<K, V> getRight() {
 		return right;
 	}
-	public void setRight(Node<K, V> right) {
+	public void setRight(AVLNode<K, V> right) {
 		this.right = right;
 	}
 	
@@ -74,10 +74,10 @@ public class Node <K extends Comparable <K>,V>implements Comparable<Node<K,V>>{
 	}
 	
 	@Override
-	public int compareTo(Node<K,V> o) {
+	public int compareTo(AVLNode<K,V> o) {
 		// TODO Auto-generated method stub
-		Node<K,V> A = this;
-		Node<K,V> B = o;
+		AVLNode<K,V> A = this;
+		AVLNode<K,V> B = o;
 		
 		//int output = A.lastName.compareTo(B.lastName);
 		int output = A.getKey().compareTo(B.getKey());

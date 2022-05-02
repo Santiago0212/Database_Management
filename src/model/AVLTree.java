@@ -1,12 +1,12 @@
 package model;
 
-public class Tree<K extends Comparable <K>,V> {
+public class AVLTree<K extends Comparable <K>,V> {
 
-	protected Node<K,V> root;
+	protected AVLNode<K,V> root;
 	private final static int COUNT = 15;
 
 	public void insert(K key, V value) {
-		Node<K, V> node = new Node<K, V>(key,value);
+		AVLNode<K, V> node = new AVLNode<K, V>(key,value);
 		
 		if(root == null) {
 			root = node;
@@ -17,7 +17,7 @@ public class Tree<K extends Comparable <K>,V> {
 
 	}
 	
-	private void insert(Node<K, V> node, Node<K, V> current) {
+	private void insert(AVLNode<K, V> node, AVLNode<K, V> current) {
 		
 		if(node.compareTo(current)<=-1) {
 			if(current.getLeft() == null) {
@@ -44,7 +44,7 @@ public class Tree<K extends Comparable <K>,V> {
 	}
 
 	// Recursivo
-	public void inorder(Node<K, V> node) {
+	public void inorder(AVLNode<K, V> node) {
 		// Caso base
 		if (node == null) {
 			return;
@@ -56,12 +56,12 @@ public class Tree<K extends Comparable <K>,V> {
 		inorder(node.getRight());
 	}
 
-	public Node<K, V> triggerSearch(int key) {
+	public AVLNode<K, V> triggerSearch(int key) {
 		return search(root, key);
 	}
 
 	// Recursivo
-	public Node<K, V> search(Node<K, V> node, int key) {
+	public AVLNode<K, V> search(AVLNode<K, V> node, int key) {
 		// Caso base
 		if (node == null) {
 			return null;
@@ -85,7 +85,7 @@ public class Tree<K extends Comparable <K>,V> {
 		System.out.println(level);
 	}
 
-	public int getMaxLevel(Node<K, V> node, int level) {
+	public int getMaxLevel(AVLNode<K, V> node, int level) {
 
 		if (node == null) {
 			return level-1;
@@ -103,7 +103,7 @@ public class Tree<K extends Comparable <K>,V> {
 		print(root,1);
 	}
 	
-	private void print(Node<K, V> root, int space)
+	private void print(AVLNode<K, V> root, int space)
 	{
 	    // Base case
 	    if (root == null)
@@ -126,7 +126,7 @@ public class Tree<K extends Comparable <K>,V> {
 	    print(root.getLeft(), space);
 	}//codigo tomado de : https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
 	
-	public Node<K, V> getMin(Node<K, V> current){
+	public AVLNode<K, V> getMin(AVLNode<K, V> current){
 		if (current.getLeft() == null) {
 			return current;
 		} else {
@@ -134,7 +134,7 @@ public class Tree<K extends Comparable <K>,V> {
 		}
 	}
 	
-	public Node<K, V> getMax(Node<K, V> current) {
+	public AVLNode<K, V> getMax(AVLNode<K, V> current) {
 		if (current.getRight() == null) {
 			return current;
 		}else {
@@ -142,22 +142,22 @@ public class Tree<K extends Comparable <K>,V> {
 		}
 	}
 	
-	public void triggerDelete(int key) {
+	public void triggerDelete(K key) {
 		if (root != null){
 			root = delete(root, key);
 		}
 	}
 	
-	public Node<K, V> delete(Node<K, V> current, int key){
+	public AVLNode<K, V> delete(AVLNode<K, V> current, K key){
 		
-		if ((Integer) current.getKey() == key){
+		if (current.getKey().compareTo(key)==0){
 			if (current.getLeft() == null && 
 					current.getRight() == null){
 				return null;
 			} else if (current.getLeft() != null && 
 					current.getRight() != null) {
-				Node<K, V> succesor = getMin(current.getRight());
-				Node<K, V> newRightTree = delete(current.getRight(), (Integer)succesor.getKey());
+				AVLNode<K, V> succesor = getMin(current.getRight());
+				AVLNode<K, V> newRightTree = delete(current.getRight(), succesor.getKey());
 				
 				succesor.setLeft(current.getLeft());
 				succesor.setRight(newRightTree);
@@ -169,11 +169,11 @@ public class Tree<K extends Comparable <K>,V> {
 				return current.getRight();
 			}
 			
-		} else if (key < (Integer)current.getKey()){
-			Node<K, V> newLeftTree = delete(current.getLeft(), key);
+		} else if (key.compareTo(current.getKey())>0){
+			AVLNode<K, V> newLeftTree = delete(current.getLeft(), key);
 			current.setLeft(newLeftTree);
 		} else {
-			Node<K, V> newRightTree = delete(current.getRight(), key);
+			AVLNode<K, V> newRightTree = delete(current.getRight(), key);
 			current.setRight(newRightTree);
 		}
 		
@@ -186,7 +186,7 @@ public class Tree<K extends Comparable <K>,V> {
 		return out;
 	}*/
 	
-	public String print(Node<K, V> node) {
+	public String print(AVLNode<K, V> node) {
 		String out = "";
 		boolean left = false;
 		boolean right = false;
@@ -217,19 +217,19 @@ public class Tree<K extends Comparable <K>,V> {
 		return out;
 	}
 	
-	public Node<K, V> getRoot() {
+	public AVLNode<K, V> getRoot() {
 		return root;
 	}
 
-	public void setRoot(Node<K, V> root) {
+	public void setRoot(AVLNode<K, V> root) {
 		this.root = root;
 	}
 
-	public int height(Node<K, V> root2) {
+	public int height(AVLNode<K, V> root2) {
 		return root2.calculateHeightR();
 	}
 
-	public void autoBalance(Node<K, V> current) {
+	public void autoBalance(AVLNode<K, V> current) {
 		
 		if(current == null) {
 			return;
@@ -253,13 +253,13 @@ public class Tree<K extends Comparable <K>,V> {
 		autoBalance(current.getDad());
 	}
 	
-	public Node<K, V> balance(Node<K, V> node) {
+	public AVLNode<K, V> balance(AVLNode<K, V> node) {
 		
 		int nodeBalance = getBalance(node);
 		System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
 		
 		if(nodeBalance == 2) {
-			Node<K, V> nodeRight = node.getRight();
+			AVLNode<K, V> nodeRight = node.getRight();
 			int nodeRightBalance = getBalance(nodeRight);
 			
 
@@ -271,7 +271,7 @@ public class Tree<K extends Comparable <K>,V> {
 			}
 			
 		} else if(nodeBalance == -2) {
-			Node<K, V> nodeLeft = node.getLeft();
+			AVLNode<K, V> nodeLeft = node.getLeft();
 			int nodeLeftBalance = getBalance(nodeLeft);
 
 
@@ -286,9 +286,9 @@ public class Tree<K extends Comparable <K>,V> {
 		return node;
 	}
 	
-	protected Node<K, V> leftRotate(Node<K, V> node) {
+	protected AVLNode<K, V> leftRotate(AVLNode<K, V> node) {
 		
-		Node<K, V> right = node.getRight();
+		AVLNode<K, V> right = node.getRight();
 		
 		if(node == root) {
 			root = right;
@@ -303,9 +303,9 @@ public class Tree<K extends Comparable <K>,V> {
 		return right;
 	}
 	
-	protected Node<K, V> rightRotate(Node<K, V> node) {
+	protected AVLNode<K, V> rightRotate(AVLNode<K, V> node) {
 		
-		Node<K, V> left = node.getLeft();
+		AVLNode<K, V> left = node.getLeft();
 		
 		if(node == root) {
 			root = left;
@@ -321,16 +321,16 @@ public class Tree<K extends Comparable <K>,V> {
 		return left;
 	}
 	
-	public int getHeight(Node<K, V> node) {
+	public int getHeight(AVLNode<K, V> node) {
 		if(node == null) {
 			return 0;
 		}
 		return 1 + (Math.max(getHeight(node.getLeft()),getHeight(node.getRight())));
 	}
 	
-	public int getBalance(Node<K, V> node) {
-		Node<K, V> left = node.getLeft();
-		Node<K, V> right = node.getRight();
+	public int getBalance(AVLNode<K, V> node) {
+		AVLNode<K, V> left = node.getLeft();
+		AVLNode<K, V> right = node.getRight();
 		
 		return getHeight(right) - getHeight(left);
 	}

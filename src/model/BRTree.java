@@ -1,9 +1,9 @@
 package model;
 
-public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
+public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	
 	@Override
-	public void autoBalance(Node<K, V> current) {
+	public void autoBalance(AVLNode<K, V> current) {
 		
 		if(current == null) {
 			return;
@@ -29,13 +29,13 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 	}
 	
 	@Override
-	public Node<K, V> balance(Node<K, V> node) {
+	public AVLNode<K, V> balance(AVLNode<K, V> node) {
 		
 		int nodeBalance = getBalance(node);
 		System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
 		
 		if(nodeBalance == 2) {
-			Node<K, V> nodeRight = node.getRight();
+			AVLNode<K, V> nodeRight = node.getRight();
 			int nodeRightBalance = getBalance(nodeRight);
 			
 
@@ -47,7 +47,7 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 			}
 			
 		} else if(nodeBalance == -2) {
-			Node<K, V> nodeLeft = node.getLeft();
+			AVLNode<K, V> nodeLeft = node.getLeft();
 			int nodeLeftBalance = getBalance(nodeLeft);
 
 
