@@ -292,11 +292,14 @@ public class Tree<K,V> {
 		
 		if(node == root) {
 			root = right;
+			
 		}
 		
 		node.setRight(right.getLeft());
 		right.setLeft(node);
-
+		right.setDad(node.getDad());
+		node.setDad(right);
+		
 		return right;
 	}
 	
@@ -310,6 +313,8 @@ public class Tree<K,V> {
 		
 		node.setLeft(left.getRight());
 		left.setRight(node);
+		left.setDad(node.getDad());
+		node.setDad(left);
 		
 		
 		
