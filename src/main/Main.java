@@ -17,6 +17,7 @@ public class Main extends Application{
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		pruebaTree();
 		launch(args);
 	}
 	
@@ -60,7 +61,8 @@ public class Main extends Application{
 	}
 
 	private static void prube() {
-		System.out.println(tree.weight(tree.getRoot()));
+		tree.triggerInorder();
+		//System.out.println(tree.weight(tree.getRoot()));
 		
 	}
 

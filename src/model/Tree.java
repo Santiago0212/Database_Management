@@ -52,6 +52,7 @@ public class Tree<K,V> {
 		// Recursivo
 
 		inorder(node.getLeft());
+		System.out.println(node.getKey());
 		inorder(node.getRight());
 	}
 
@@ -229,17 +230,33 @@ public class Tree<K,V> {
 	}
 
 	public void autoBalance(Node current) {
+		
 		if(current == null) {
 			return;
+		} if(current.dad == null) {
+			balance(root);
+			return;
+		} 
+		
+		if(current.dad.getLeft() != null) {
+			if(current == current.dad.getLeft()) {
+				current.dad.setLeft(balance(current));
+			} 
+		} if(current.dad.getRight() != null) {
+			if(current == current.dad.getRight()) {
+				current.dad.setRight(balance(current));
+			}
 		}
-		balance(current);
+ 
+
+		
 		autoBalance(current.getDad());
 	}
 	
 	public Node balance(Node node) {
 		
 		int nodeBalance = getBalance(node);
-		System.out.println("Balance: "+nodeBalance);
+		System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
 		
 		if(nodeBalance == 2) {
 			Node nodeRight = node.getRight();
