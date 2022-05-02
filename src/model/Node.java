@@ -1,6 +1,6 @@
 package model;
 
-public class Node <K,V>{
+public class Node <K extends Comparable <K>,V>implements Comparable<Node<K,V>>{
 	
 	private K key;
 	private V value;
@@ -71,5 +71,16 @@ public class Node <K,V>{
 	
 	public int getBalance() {
 		return calculateHeightR()-calculateHeightL();
+	}
+	
+	@Override
+	public int compareTo(Node<K,V> o) {
+		// TODO Auto-generated method stub
+		Node<K,V> A = this;
+		Node<K,V> B = o;
+		
+		//int output = A.lastName.compareTo(B.lastName);
+		int output = A.getKey().compareTo(B.getKey());
+		return output;
 	}
 }

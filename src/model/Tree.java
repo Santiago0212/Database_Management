@@ -1,6 +1,6 @@
 package model;
 
-public class Tree<K,V> {
+public class Tree<K extends Comparable <K>,V> {
 
 	private Node<K,V> root;
 	private final static int COUNT = 15;
@@ -19,14 +19,14 @@ public class Tree<K,V> {
 	
 	private void insert(Node<K, V> node, Node<K, V> current) {
 		
-		if((Integer) node.getKey() < (Integer) current.getKey()) {
+		if(node.compareTo(current)==-1) {
 			if(current.getLeft() == null) {
 				current.setLeft(node);
 				node.setDad(current);
 				return;
 			}
 			insert(node,current.getLeft());
-		} else if((Integer) node.getKey() > (Integer) current.getKey()) {
+		} else if(node.compareTo(current)==1) {
 			if(current.getRight() == null) {
 				current.setRight(node);
 				node.setDad(current);
