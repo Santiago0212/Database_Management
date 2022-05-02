@@ -9,7 +9,8 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 			return;
 		} if(current.getDad() == null) {
 			balance(root);
-			return;
+			return;//lol
+			
 		} 
 		
 		if(current.getDad().getLeft() != null) {
