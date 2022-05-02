@@ -2,7 +2,7 @@ package model;
 
 public class Tree<K extends Comparable <K>,V> {
 
-	private Node<K,V> root;
+	protected Node<K,V> root;
 	private final static int COUNT = 15;
 
 	public void insert(K key, V value) {
@@ -286,7 +286,7 @@ public class Tree<K extends Comparable <K>,V> {
 		return node;
 	}
 	
-	private Node<K, V> leftRotate(Node<K, V> node) {
+	protected Node<K, V> leftRotate(Node<K, V> node) {
 		
 		Node<K, V> right = node.getRight();
 		
@@ -303,7 +303,7 @@ public class Tree<K extends Comparable <K>,V> {
 		return right;
 	}
 	
-	private Node<K, V> rightRotate(Node<K, V> node) {
+	protected Node<K, V> rightRotate(Node<K, V> node) {
 		
 		Node<K, V> left = node.getLeft();
 		

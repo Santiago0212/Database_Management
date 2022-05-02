@@ -8,12 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Person;
 import model.Tree;
 
 public class Main extends Application{
 
 	static Tree<Integer, String> tree = new Tree<Integer, String>();
-	static Tree<Character,String> abecedaryTree = new Tree <Character,String>();
+	static Tree<Character,Tree<Integer,Person>> abecedaryTree = new Tree <Character,Tree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Main extends Application{
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
-		abecedaryTree.insert(c,"name");
+		abecedaryTree.insert(c,new Tree<Integer,Person>());
 		int op;
 		do {
 			op=menu();
