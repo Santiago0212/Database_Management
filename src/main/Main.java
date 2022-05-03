@@ -2,7 +2,9 @@ package main;
 
 import java.util.Scanner;
 
+import control.EntryWelfareUniversity;
 import control.MainWindow;
+import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,8 +21,22 @@ public class Main extends Application{
 	
 	public static void main(String[] args) {
 		//pruebaTree();
-		createTree();		
+		//createTree();		
 		launch(args);
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		
+		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
+		loader.setController(new PrincipalMenu());
+		Parent parent = (Parent) loader.load();
+		Stage stage = new Stage();
+		Scene scene = new Scene(parent);
+		stage.setTitle("AVL Tree Search");
+		stage.setScene(scene);
+		stage.show();
+		
 	}
 	
 	private static void createTree() {
@@ -33,7 +49,7 @@ public class Main extends Application{
 			send(op,abecedaryTree);
 		}while(op!=0);
 	}
-
+/*
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
@@ -45,7 +61,7 @@ public class Main extends Application{
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+	*/
 	public static void pruebaTree() {
 		System.out.println("Select an option to do in your tree:");
 		int op;
