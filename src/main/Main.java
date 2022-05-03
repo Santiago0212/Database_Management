@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Date;
+import java.util.Random;
 import java.util.Scanner;
 
 import control.MainWindow;
@@ -8,13 +10,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.BRNode;
+import model.BRTree;
+import model.Node;
 import model.Person;
+import model.Sex;
 import model.Tree;
 
 public class Main extends Application{
 
 	static Tree<Integer, String> tree = new Tree<Integer, String>();
-	static Tree<Character,Tree<Integer,Person>> abecedaryTree = new Tree <Character,Tree<Integer,Person>>();
+	static Tree<Character,BRTree<Integer,Person>> abecedaryTree = new Tree <Character,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -26,7 +32,7 @@ public class Main extends Application{
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
-		abecedaryTree.insert(c,new Tree<Integer,Person>());
+		abecedaryTree.insert(c,new BRTree<Integer,Person>());
 		int op;
 		do {
 			op=menu();
@@ -80,6 +86,15 @@ public class Main extends Application{
 	}
 
 	private static void print(Tree<?,?> t) {
+		System.out.println("write 0 for print persons tree");
+		int ans = sc.nextInt();
+		sc.nextLine();
+		if(ans==0) {
+			System.out.println("write the Capital Letter");
+			Node<Character,BRTree<Integer,Person>> node =abecedaryTree.triggerSearch(sc.next().charAt(0));
+			node.getValue().print();
+			return;
+		}
 		t.print();
 		
 	}
@@ -94,16 +109,30 @@ public class Main extends Application{
 	}
 
 	private static void add() {
-		
-		System.out.print("Write the key for your node\n");
-		int key = sc.nextInt();
+		System.out.println("Write 0 if you want add a person");
+		int op = sc.nextInt();
 		sc.nextLine();
-		System.out.print("Write the value for the node\n");
-		String value = sc.nextLine();
-		
-		tree.insert(key,value);
+		if(op==0) {
+			System.out.println("Write the name");
+			String name= sc.nextLine();
+			Node<Character,BRTree<Integer,Person>> node = abecedaryTree.triggerSearch(name.charAt(0));
+			node.getValue().insert(getRandom(0,1000), new Person(name,null, null, new Date(), 0, null));
+		}else {
+			System.out.print("Write the key for your node\n");
+			int key = sc.nextInt();
+			sc.nextLine();
+			System.out.print("Write the value for the node\n");
+			String value = sc.nextLine();
+			
+			tree.insert(key,value);
+		}
 	}
-
+	
+	public static int getRandom(int min, int max) {
+	    Random random = new Random();
+	    return random.nextInt(max - min) + min;
+	}
+	
 	private static int menu() {
 		System.out.println("1: For add a node\n"+"2: For delete a node\n"+
 	"3: For print the values in your tree\n");

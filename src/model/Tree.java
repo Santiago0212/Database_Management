@@ -12,12 +12,12 @@ public class Tree<K extends Comparable <K>,V> {
 			root = node;
 		} else {
 			insert(node, root);
-			autoBalance(node);
+			autoBalance(node.getDad());
 		}
 
 	}
 	
-	private void insert(Node<K, V> node, Node<K, V> current) {
+	protected void insert(Node<K, V> node, Node<K, V> current) {
 		
 		if(node.compareTo(current)<=-1) {
 			if(current.getLeft() == null) {
@@ -56,22 +56,22 @@ public class Tree<K extends Comparable <K>,V> {
 		inorder(node.getRight());
 	}
 
-	public Node<K, V> triggerSearch(int key) {
+	public Node<K, V> triggerSearch(K key) {
 		return search(root, key);
 	}
 
 	// Recursivo
-	public Node<K, V> search(Node<K, V> node, int key) {
+	public Node<K, V> search(Node<K, V> node, K key) {
 		// Caso base
 		if (node == null) {
 			return null;
 		}
 
-		if ((Integer)key == node.getKey()) {
+		if (key == node.getKey()) {
 			return node;
 		}
 		// Procedimiento recursivo
-		if ((Integer) key < (Integer) node.getKey()) {
+		if (key.compareTo(node.getKey())<=-1) {
 			return search(node.getLeft(), key);
 		} else {
 			return search(node.getRight(), key);
@@ -103,7 +103,7 @@ public class Tree<K extends Comparable <K>,V> {
 		print(root,1);
 	}
 	
-	private void print(Node<K, V> root, int space)
+	protected void print(Node<K, V> root, int space)
 	{
 	    // Base case
 	    if (root == null)
