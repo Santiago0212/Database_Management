@@ -69,5 +69,8 @@ public class Person {
 		this.nationality = nationality;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return name;
+	}
 }

@@ -208,7 +208,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	    System.out.print("\n");
 	    for (int i = 10; i < space; i++)
 	        System.out.print(" ");
-	    System.out.print(root.getKey()+" "+root.getColor() + "\n");
+	    System.out.print(root.getKey()+" "+root.getColor()+" " +root.getValue() + "\n");
 	 
 	    // Process left child
 	    printBR(root.getLeft(), space);
