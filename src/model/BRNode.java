@@ -12,18 +12,21 @@ public class BRNode<K extends Comparable<K>,V> extends Node<K,V>{
 		super(key, value);
 		color = Color.RED;
 	}
-
+	
+	@Override
 	public BRNode<K, V> getDad() {
 		return dad;
 	}
-
+	
 	public void setDad(BRNode<K, V> dad) {
 		this.dad = dad;
-		if(dad.getDad()!=null) {
-			if(dad.getDad().getRight()==dad)
-				this.uncle = dad.getDad().getLeft();
-			else
-				this.uncle= dad.getDad().getRight();
+		if(dad!=null) {
+			if(dad.getDad()!=null) {
+				if(dad.getDad().getRight()==dad)
+					this.uncle = dad.getDad().getLeft();
+				else
+					this.uncle= dad.getDad().getRight();
+			}
 		}
 	}
 

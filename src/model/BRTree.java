@@ -8,10 +8,11 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 		
 		if(root == null) {
 			root = node;
-			root.setColor(Color.RED);
+			root.setColor(Color.BLACK);
 		} else {
+			node.setColor(Color.RED);
 			insertBR(node, root);
-			autoBalanceBR(node.getDad());
+			autoBalanceBR(node);
 		}
 
 	}
@@ -41,17 +42,15 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 		if(current == null) {
 			return;
 		} if(current.getDad() == null) {
-			balance(root);
 			return;
 		} 
-		
 		if(current.getDad().getLeft() != null) {
 			if(current == current.getDad().getLeft()) {
-				current.getDad().setLeft(balance(current));
+				current.getDad().setLeft(balanceBR(current));
 			} 
-		} if(current.getDad().getRight() != null) {
+		} if(current.getDad()!=null &&current.getDad().getRight() != null) {
 			if(current == current.getDad().getRight()) {
-				current.getDad().setRight(balance(current));
+				current.getDad().setRight(balanceBR(current));
 			}
 		}
  
@@ -89,11 +88,16 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 			return null;
 		}
 		
+		if(node==root) {
+			root.setColor(Color.BLACK);
+			return node;
+		}
+		
 		BRNode<K, V> dad = node.getDad();
 		BRNode<K, V> uncle = node.getUncle();
 		
 		if(dad.getColor()==Color.RED) {
-			if(node.getUncle()!=null&uncle.getColor()==Color.RED) {
+			if(node.getUncle()!=null&&uncle.getColor()==Color.RED) {
 				dad.setColor(Color.BLACK);
 				uncle.setColor(Color.BLACK);
 				dad.getDad().setColor(Color.RED);
@@ -101,11 +105,17 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 			}else {
 				if(dad.getRight()==node) {
 					leftRotateBR(dad);
+					dad.setColor(Color.BLACK);
+					dad.getDad().setColor(Color.RED);
 					balanceBR(dad.getLeft());
+					rightRotateBR(dad.getDad());
 				}
 				else {
 					rightRotateBR(dad);
+					dad.setColor(Color.BLACK);
+					dad.getDad().setColor(Color.RED);
 					balanceBR(dad.getRight());
+					leftRotateBR(dad.getDad());
 				}
 			}
 		}
@@ -124,6 +134,15 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		
 		node.setRight(right.getLeft());
 		right.setLeft(node);
+		if(node.getDad()!=null) {
+			BRNode<K, V> dad = node.getDad();
+			
+			if(dad.getRight()==node) {
+				dad.setRight(right);
+			}else {
+				dad.setLeft(right);
+			}
+		}
 		right.setDad(node.getDad());
 		node.setDad(right);
 		
@@ -141,8 +160,17 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		
 		node.setLeft(left.getRight());
 		left.setRight(node);
-		left.setDad(node.getDad());
-		node.setDad(left);
+		if(node.getDad()!=null) {
+			BRNode<K, V> dad = node.getDad();
+			
+			if(dad.getRight()==node) {
+				dad.setRight(left);
+			}else {
+				dad.setLeft(left);
+			}
+		}
+			left.setDad(node.getDad());
+			node.setDad(left);
 		
 		
 		
@@ -154,7 +182,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		printBR(root,1);
 	}
 	
-	protected void printBR(Node<K, V> root, int space)
+	protected void printBR(BRNode<K, V> root, int space)
 	{
 	    // Base case
 	    if (root == null)
@@ -171,7 +199,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	    System.out.print("\n");
 	    for (int i = 10; i < space; i++)
 	        System.out.print(" ");
-	    System.out.print(root.getKey() + "\n");
+	    System.out.print(root.getKey()+" "+root.getColor() + "\n");
 	 
 	    // Process left child
 	    printBR(root.getLeft(), space);

@@ -20,7 +20,7 @@ import model.Tree;
 public class Main extends Application{
 
 	static Tree<Integer, String> tree = new Tree<Integer, String>();
-	static Tree<Character,BRTree<Integer,Person>> abecedaryTree = new Tree <Character,BRTree<Integer,Person>>();
+	static Tree<Character,BRTree<String,Person>> abecedaryTree = new Tree <Character,BRTree<String,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class Main extends Application{
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
-		abecedaryTree.insert(c,new BRTree<Integer,Person>());
+		abecedaryTree.insert(c,new BRTree<String,Person>());
 		int op;
 		do {
 			op=menu();
@@ -91,7 +91,7 @@ public class Main extends Application{
 		sc.nextLine();
 		if(ans==0) {
 			System.out.println("write the Capital Letter");
-			Node<Character,BRTree<Integer,Person>> node =abecedaryTree.triggerSearch(sc.next().charAt(0));
+			Node<Character,BRTree<String,Person>> node =abecedaryTree.triggerSearch(sc.next().charAt(0));
 			node.getValue().print();
 			return;
 		}
@@ -115,8 +115,8 @@ public class Main extends Application{
 		if(op==0) {
 			System.out.println("Write the name");
 			String name= sc.nextLine();
-			Node<Character,BRTree<Integer,Person>> node = abecedaryTree.triggerSearch(name.charAt(0));
-			node.getValue().insert(getRandom(0,1000), new Person(name,null, null, new Date(), 0, null));
+			Node<Character,BRTree<String,Person>> node = abecedaryTree.triggerSearch(name.charAt(0));
+			node.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
 		}else {
 			System.out.print("Write the key for your node\n");
 			int key = sc.nextInt();
