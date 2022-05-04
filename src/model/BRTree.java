@@ -1,6 +1,6 @@
 package model;
 
-public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
+public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	BRNode<K,V> root;
 	@Override
 	public void insert(K key, V value) {
@@ -132,6 +132,11 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 			root.setColor(Color.BLACK);
 		}
 		
+		if(right==null) {
+			return null;
+		}
+		
+		
 		node.setRight(right.getLeft());
 		right.setLeft(node);
 		if(node.getDad()!=null) {
@@ -157,6 +162,9 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		if(node == root) {
 			root = left;
 			root.setColor(Color.BLACK);
+		}
+		if(left==null) {
+			return null;
 		}
 		
 		node.setLeft(left.getRight());

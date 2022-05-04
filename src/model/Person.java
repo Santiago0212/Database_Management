@@ -21,6 +21,11 @@ public class Person {
 		this.height = height;
 		this.nationality = nationality;
 	}
+	public Person(String code, String name, String lastName, Sex sex) {
+		this.name = name;
+		this.lastname = lastName;
+		this.sex = sex;
+	}
 	public String getCode() {
 		return code;
 	}

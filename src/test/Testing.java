@@ -7,11 +7,11 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;*/
 
 import model.Node;
-import model.Tree;
+import model.AVLTree;
 
 public class Testing {
 	
-	private Tree<?, ?> tree = new Tree();
+	private AVLTree<?, ?> tree = new AVLTree();
 	private Node<?, ?>  node;
 	
 	/*public void setupStage1() {
