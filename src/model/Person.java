@@ -6,12 +6,11 @@ public class Person {
 	private String code;
 	private String name;
 	private String lastname;
+	private String completeName;
 	private Sex sex;
 	private Date date;
 	private double height;
 	private String nationality;
-	
-	
 	
 	public Person(String code, String name, String lastname, Sex sex, Date date, double height, String nationality) {
 		this.code = code;
@@ -22,6 +21,16 @@ public class Person {
 		this.height = height;
 		this.nationality = nationality;
 	}
+	
+	public Person(String code, String name, String lastname, Sex sex) {
+		this.code = code;
+		this.name = name;
+		this.lastname = lastname;
+		this.completeName = this.name+" "+this.lastname;
+		this.sex = sex;
+	}
+	
+	
 	public String getCode() {
 		return code;
 	}

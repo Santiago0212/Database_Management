@@ -56,22 +56,22 @@ public class AVLTree<K extends Comparable <K>,V> {
 		inorder(node.getRight());
 	}
 
-	public AVLNode<K, V> triggerSearch(int key) {
+	public AVLNode<K, V> search(K key) {
 		return search(root, key);
 	}
 
 	// Recursivo
-	public AVLNode<K, V> search(AVLNode<K, V> node, int key) {
+	private AVLNode<K, V> search(AVLNode<K, V> node, K key) {
 		// Caso base
 		if (node == null) {
 			return null;
 		}
 
-		if ((Integer)key == node.getKey()) {
+		if (key.compareTo(node.getKey()) == 0) {
 			return node;
 		}
 		// Procedimiento recursivo
-		if ((Integer) key < (Integer) node.getKey()) {
+		if (key.compareTo(node.getKey()) < 0) {
 			return search(node.getLeft(), key);
 		} else {
 			return search(node.getRight(), key);

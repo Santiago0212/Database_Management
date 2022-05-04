@@ -1,9 +1,10 @@
 package main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
-
-import control.EntryWelfareUniversity;
-import control.MainWindow;
 import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,18 +12,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Person;
+import model.Sex;
 import model.AVLTree;
 
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
-	static AVLTree<Character,AVLTree<Integer,Person>> abecedaryTree = new AVLTree <Character,AVLTree<Integer,Person>>();
+	static AVLTree<String,AVLTree<Integer,Person>> abecedaryTree = new AVLTree <String,AVLTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		try {
+			createTree();
+			createCombinations();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		//pruebaTree();
 		//createTree();		
-		launch(args);
+		//launch(args);
 	}
 	
 	@Override
@@ -40,14 +48,11 @@ public class Main extends Application{
 	}
 	
 	private static void createTree() {
-		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
-		for(Character c: alphabet)
-		abecedaryTree.insert(c,new AVLTree<Integer,Person>());
-		int op;
-		do {
-			op=menu();
-			send(op,abecedaryTree);
-		}while(op!=0);
+		String[] alphabet = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+		for(String c: alphabet) {
+			abecedaryTree.insert(c,new AVLTree<Integer,Person>());
+		}
+		
 	}
 /*
 	@Override
@@ -105,7 +110,7 @@ public class Main extends Application{
 		int key = sc.nextInt();
 		sc.nextLine();
 		
-		t.triggerDelete(key);
+		//t.triggerDelete(key);
 		
 	}
 
@@ -125,7 +130,108 @@ public class Main extends Application{
 	"3: For print the values in your tree\n");
 		return sc.nextInt();
 	}
+	
+	
+	public static void createCombinations() throws IOException {
+		String[] names = importNames();
+		String[] lastNames = importLastNames();
+		
+	
+		int k = 0;
+		for(int i = 0; i<1000; i++) {
+			for(int j = 0; j<1000; j++) {
+				String name = names[i].split(",")[0];
+				String sexString = names[i].split(",")[1];
+				String lastName = lastNames[j];
+				String code = k+"";
+				
+				Sex sex = Sex.NONE;
+				if(sexString.equalsIgnoreCase("BOY")) {
+					sex = Sex.MALE;
+				} else if(sexString.equalsIgnoreCase("GIRL")) {
+					sex = Sex.FEMALE;
+				}
+				
+				Person person = new Person(code,name,lastName,sex);
+				
+				String initial = person.getName().substring(0,1); 
+				
+			
+				System.out.println(initial.getClass());
+				
+				AVLTree<Integer, Person> addingTree = abecedaryTree.search(initial).getValue();
+				
+				addingTree.insert(k, person);
 
+				k++;
+			}
+		}
+
+	}
+	
+	public static String[] importNames() throws IOException {
+		String path = "means/babynames-clean.csv";
+		
+		String[] namesList = new String[1000];
+		
+		File names = new File(path);
+		
+		if(names.exists()) {
+			FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr);
+			
+			String line;
+			
+			int i = 0;
+			boolean finished = false;
+			
+			while((line = br.readLine())!=null && !finished) {
+				if(i<1000) {
+					namesList[i] = line.toUpperCase();
+				}
+				i++;
+			}
+			
+			if (br != null)br.close();
+            if (fr != null)fr.close();
+			
+		}
+		
+		return namesList;
+		
+	}
+	
+	public static String[] importLastNames() throws IOException {
+		String path = "means/Names_2010Census.csv";
+		
+		String[] lastNamesList = new String[1000];
+		
+		File names = new File(path);
+		
+		if(names.exists()) {
+			FileReader fr = new FileReader(path);
+			BufferedReader br = new BufferedReader(fr);
+			
+			String line;
+			
+			int i = 0;
+			boolean finished = false;
+			
+			while((line = br.readLine())!=null && !finished) {
+				if(i<1000 && i>0) {
+					String[] data = line.split(",");
+					lastNamesList[i] = data[0];
+				}
+				i++;
+			}
+			
+			if (br != null)br.close();
+            if (fr != null)fr.close();
+			
+		}
+		
+		return lastNamesList;
+	}
 	
 
 }
