@@ -104,17 +104,17 @@ public class BRTree<K extends Comparable<K>,V> extends Tree<K,V>{
 				balanceBR(dad.getDad());
 			}else {
 				if(dad.getRight()==node) {
-					leftRotateBR(dad);
+					leftRotateBR(dad.getDad());
 					dad.setColor(Color.BLACK);
-					dad.getDad().setColor(Color.RED);
 					balanceBR(dad.getLeft());
+					if(dad.getDad()!=null)
 					rightRotateBR(dad.getDad());
 				}
 				else {
-					rightRotateBR(dad);
+					rightRotateBR(dad.getDad());
 					dad.setColor(Color.BLACK);
-					dad.getDad().setColor(Color.RED);
 					balanceBR(dad.getRight());
+					if(dad.getDad()!=null)
 					leftRotateBR(dad.getDad());
 				}
 			}
@@ -145,6 +145,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		}
 		right.setDad(node.getDad());
 		node.setDad(right);
+		node.setColor(Color.RED);
 		
 		return right;
 	}
@@ -171,7 +172,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		}
 			left.setDad(node.getDad());
 			node.setDad(left);
-		
+			node.setColor(Color.RED);
 		
 		
 		return left;
