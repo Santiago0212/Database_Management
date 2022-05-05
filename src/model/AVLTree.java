@@ -339,9 +339,10 @@ public class AVLTree<K extends Comparable <K>,V> {
 		return getHeight(right) - getHeight(left);
 	}
 
-	 public void preorderK() {
+	 public ArrayList<K> preorderK() {
 		 ArrayList<K> people= new ArrayList<>();
 	       people =  preorderK(root,people);
+	       return people;
 	    }
 
 	   public ArrayList<K> preorderK(AVLNode<K,V> current,ArrayList<K> people) {
@@ -354,9 +355,10 @@ public class AVLTree<K extends Comparable <K>,V> {
 	        return people;
 	       
 	    }
-	   public void preorderV() {
+	   public ArrayList<V> preorderV() {
 			 ArrayList<V> people= new ArrayList<>();
 		       people =  preorderV(root,people);
+		       return people;
 		    }
 
 		   public ArrayList<V> preorderV(AVLNode<K,V> current,ArrayList<V> people) {
