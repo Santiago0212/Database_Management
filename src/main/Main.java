@@ -15,6 +15,7 @@ import model.Sex;
 import model.AVLNode;
 import model.AVLTree;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
@@ -31,21 +32,21 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		
 		createTree();
-		new Thread(()->{
+		/*new Thread(()->{
 			try {
 				createCombinations();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});
+		});*/
 		
-		/*try {
+		try {
 			createCombinations();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		launch(args);
 	}
 	
@@ -64,7 +65,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu());
+		loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -100,6 +101,7 @@ public class Main extends Application{
 				
 				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
 				
+				
 				addingTree.insert(code, person);
 				//addingTree.print();
 				
@@ -108,7 +110,7 @@ public class Main extends Application{
 			}
 			
 		}
-		abecedaryTree.triggerSearch('A').getValue().print();
+		//abecedaryTree.triggerSearch('A').getValue().print();
 
 	}
 	

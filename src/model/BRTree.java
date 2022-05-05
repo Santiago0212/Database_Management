@@ -84,12 +84,12 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 
 	}
 	
-	public ArrayList<V> searchAll(V name) {
+	public ArrayList<V> searchAll(String name) {
 		ArrayList<V> names = new ArrayList<V>();
 		return searchAll(root, name,names);
 	}
 	
-	private ArrayList<V> searchAll(BRNode<K, V> current, V name, ArrayList<V> names) {
+	private ArrayList<V> searchAll(BRNode<K, V> current, String name, ArrayList<V> names) {
 		
 		if (current != null) {
 		
