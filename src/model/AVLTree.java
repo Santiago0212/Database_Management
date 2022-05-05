@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
+import javafx.event.ActionEvent;
+
 public class AVLTree<K extends Comparable <K>,V> {
 
 	protected AVLNode<K,V> root;
@@ -334,5 +338,36 @@ public class AVLTree<K extends Comparable <K>,V> {
 		
 		return getHeight(right) - getHeight(left);
 	}
+
+	 public void preorderK() {
+		 ArrayList<K> people= new ArrayList<>();
+	       people =  preorderK(root,people);
+	    }
+
+	   public ArrayList<K> preorderK(AVLNode<K,V> current,ArrayList<K> people) {
+	        if(current != null) {
+	        	people.add(current.getKey());
+	 	       preorderK(current.getLeft(),people);
+	 	       preorderK(current.getRight(),people);
+	        }
+	        
+	        return people;
+	       
+	    }
+	   public void preorderV() {
+			 ArrayList<V> people= new ArrayList<>();
+		       people =  preorderV(root,people);
+		    }
+
+		   public ArrayList<V> preorderV(AVLNode<K,V> current,ArrayList<V> people) {
+		        if(current != null) {
+		        	people.add(current.getValue());
+		 	       preorderV(current.getLeft(),people);
+		 	       preorderV(current.getRight(),people);
+		        }
+		        
+		        return people;
+		       
+		    }
 
 }

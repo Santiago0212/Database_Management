@@ -101,6 +101,7 @@ public class Main extends Application{
 				
 				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
 				
+				System.out.println(name);
 				
 				addingTree.insert(code, person);
 				//addingTree.print();
