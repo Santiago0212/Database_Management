@@ -12,12 +12,12 @@ public class AVLTree<K extends Comparable <K>,V> {
 			root = node;
 		} else {
 			insert(node, root);
-			autoBalance(node);
+			autoBalance(node.getDad());
 		}
 
 	}
 	
-	private void insert(AVLNode<K, V> node, AVLNode<K, V> current) {
+	protected void insert(AVLNode<K, V> node, AVLNode<K, V> current) {
 		
 		if(node.compareTo(current)<=-1) {
 			if(current.getLeft() == null) {
@@ -38,7 +38,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		}
 	}
 
-	// El activador del mÃ©todo recursivo
+	// El activador del método recursivo
 	public void triggerInorder() {
 		inorder(root);
 	}
@@ -61,17 +61,17 @@ public class AVLTree<K extends Comparable <K>,V> {
 	}
 
 	// Recursivo
-	private AVLNode<K, V> search(AVLNode<K, V> node, K key) {
+	public AVLNode<K, V> search(AVLNode<K, V> node, K key) {
 		// Caso base
 		if (node == null) {
 			return null;
 		}
 
-		if (key.compareTo(node.getKey()) == 0) {
+		if (key == node.getKey()) {
 			return node;
 		}
 		// Procedimiento recursivo
-		if (key.compareTo(node.getKey()) < 0) {
+		if (key.compareTo(node.getKey())<=-1) {
 			return search(node.getLeft(), key);
 		} else {
 			return search(node.getRight(), key);
@@ -103,7 +103,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		print(root,1);
 	}
 	
-	private void print(AVLNode<K, V> root, int space)
+	protected void print(AVLNode<K, V> root, int space)
 	{
 	    // Base case
 	    if (root == null)
@@ -142,22 +142,22 @@ public class AVLTree<K extends Comparable <K>,V> {
 		}
 	}
 	
-	public void triggerDelete(K key) {
+	public void triggerDelete(int key) {
 		if (root != null){
 			root = delete(root, key);
 		}
 	}
 	
-	public AVLNode<K, V> delete(AVLNode<K, V> current, K key){
+	public AVLNode<K, V> delete(AVLNode<K, V> current, int key){
 		
-		if (current.getKey().compareTo(key)==0){
+		if ((Integer) current.getKey() == key){
 			if (current.getLeft() == null && 
 					current.getRight() == null){
 				return null;
 			} else if (current.getLeft() != null && 
 					current.getRight() != null) {
 				AVLNode<K, V> succesor = getMin(current.getRight());
-				AVLNode<K, V> newRightTree = delete(current.getRight(), succesor.getKey());
+				AVLNode<K, V> newRightTree = delete(current.getRight(), (Integer)succesor.getKey());
 				
 				succesor.setLeft(current.getLeft());
 				succesor.setRight(newRightTree);
@@ -169,7 +169,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 				return current.getRight();
 			}
 			
-		} else if (key.compareTo(current.getKey())>0){
+		} else if (key < (Integer)current.getKey()){
 			AVLNode<K, V> newLeftTree = delete(current.getLeft(), key);
 			current.setLeft(newLeftTree);
 		} else {
@@ -256,7 +256,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 	public AVLNode<K, V> balance(AVLNode<K, V> node) {
 		
 		int nodeBalance = getBalance(node);
-		System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
+		//System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
 		
 		if(nodeBalance == 2) {
 			AVLNode<K, V> nodeRight = node.getRight();

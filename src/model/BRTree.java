@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+
 public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	BRNode<K,V> root;
+	
 	@Override
 	public void insert(K key, V value) {
 		BRNode<K,V> node = new BRNode<K,V>(key,value);
@@ -61,11 +64,12 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	
 	@Override
 	public BRNode<K, V> search(K key) {
+		
 		return searchBR(root, key);
 	}
 
 	// Recursivo
-	public BRNode<K, V> searchBR(BRNode<K, V> node, K key) {
+	public BRNode searchBR(BRNode<K, V> node, K key) {
 		// Caso base
 		if (node == null) {
 			return null;
@@ -80,8 +84,38 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		} else {
 			return searchBR(node.getRight(), key);
 		}
-
 	}
+	
+	
+	public ArrayList<V> searchAll(){
+		ArrayList<V> names = new ArrayList();
+		
+		
+		
+		return names;
+	}
+	
+	public ArrayList<V> searchAll(String name){
+		ArrayList<V> names = new ArrayList();
+		
+		if (node == null) {
+			return null;
+		}
+
+		if (key == node.getKey()) {
+			return node;
+		}
+		// Procedimiento recursivo
+		if (key.compareTo(node.getKey())>1) {
+			return searchBR(node.getLeft(), key);
+		} else {
+			return searchBR(node.getRight(), key);
+		}
+		
+		return names;
+	}
+
+	
 	public BRNode<K, V> balanceBR(BRNode<K, V> node) {
 		
 		//System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
