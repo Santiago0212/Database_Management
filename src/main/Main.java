@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Person;
 import model.Sex;
+import model.AVLNode;
 import model.AVLTree;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import model.BRTree;
-import model.Node;
+
 
 public class Main extends Application{
 
@@ -224,14 +225,14 @@ public class Main extends Application{
 
 	private static void print() {
 		System.out.println("write the Capital Letter");
-		Node<Character,BRTree<String,Person>> node =abecedaryTree.triggerSearch(sc.next().charAt(0));
-		node.getValue().print();
+		AVLNode<Character,BRTree<String,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
+		AVLNode.getValue().print();
 		return;
 		
 	}
 
 	/*private static void delete(Tree<?,?> t) {
-		System.out.print("Write the key for the node you want to delete\n");
+		System.out.print("Write the key for the AVLNode you want to delete\n");
 		int key = sc.nextInt();
 		sc.nextLine();
 		
@@ -243,8 +244,8 @@ public class Main extends Application{
 		
 		System.out.println("Write the name");
 		String name= sc.nextLine();
-		Node<Character,BRTree<String,Person>> node = abecedaryTree.triggerSearch(name.charAt(0));
-		node.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
+		AVLNode<Character,BRTree<String,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
+		AVLNode.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
 		
 	}
 	
@@ -254,7 +255,7 @@ public class Main extends Application{
 	}
 	
 	private static int menu() {
-		System.out.println("1: For add a node\n"+"2: For delete a node\n"+
+		System.out.println("1: For add a AVLNode\n"+"2: For delete a AVLNode\n"+
 	"3: For print the values in your tree\n");
 		int out = sc.nextInt();
 		sc.nextLine();

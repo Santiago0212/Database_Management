@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	BRNode<K,V> root;
 	@Override
@@ -58,8 +60,8 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		
 		autoBalanceBR(current.getDad());
 	}
-	@Override
-	public BRNode<K, V> triggerSearch(K key) {
+	
+	public BRNode<K, V> search(K key) {
 		return searchBR(root, key);
 	}
 
@@ -80,6 +82,36 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 			return searchBR(node.getRight(), key);
 		}
 
+	}
+	
+	public ArrayList<V> searchAll(V name) {
+		ArrayList<V> names = new ArrayList<V>();
+		return searchAll(root, name,names);
+	}
+	
+	private ArrayList<V> searchAll(BRNode<K, V> current, V name, ArrayList<V> names) {
+		
+		if (current != null) {
+		
+			searchAll(current.getLeft(),name,names);
+			Person p= (Person)current.getValue();
+			if( p.getName().equals(name))
+				names.add((V)p);
+			searchAll(current.getRight(),name,names);
+		}
+		return names;
+	}
+	
+	public void inorder(AVLNode<K, V> AVLNode) {
+		// Caso base
+		if (AVLNode == null) {
+			return;
+		}
+		// Recursivo
+
+		inorder(AVLNode.getLeft());
+		System.out.println(AVLNode.getKey());
+		inorder(AVLNode.getRight());
 	}
 	public BRNode<K, V> balanceBR(BRNode<K, V> node) {
 		
