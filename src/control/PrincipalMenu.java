@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Main;
+import model.AVLTree;
 
 public class PrincipalMenu {
 
@@ -25,6 +26,13 @@ public class PrincipalMenu {
 
     @FXML
     private TextField numDataAutoGeneTF;
+    
+    
+    private AVLTree nameData;
+    
+    public PrincipalMenu(AVLTree nameData) {
+    	this.nameData = nameData;
+    }
 
     @FXML
     void addData(ActionEvent event) throws IOException {
@@ -56,7 +64,7 @@ public class PrincipalMenu {
     @FXML
     void search(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/SearchWindow.fxml"));
-		loader.setController(new SearchWindow());
+		loader.setController(new SearchWindow(this.nameData));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);

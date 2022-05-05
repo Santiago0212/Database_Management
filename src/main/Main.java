@@ -14,30 +14,33 @@ import javafx.stage.Stage;
 import model.Person;
 import model.Sex;
 import model.AVLTree;
+import model.BRTree;
 
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
-	static AVLTree<String,AVLTree<Integer,Person>> abecedaryTree = new AVLTree <String,AVLTree<Integer,Person>>();
+	static AVLTree<String,BRTree<Integer,Person>> abecedaryTree = new AVLTree <String,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		
 		try {
 			createTree();
 			createCombinations();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//pruebaTree();
-		//createTree();		
-		//launch(args);
+
+
+			
+		launch(args);
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu());
+		loader.setController(new PrincipalMenu(abecedaryTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -50,7 +53,7 @@ public class Main extends Application{
 	private static void createTree() {
 		String[] alphabet = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		for(String c: alphabet) {
-			abecedaryTree.insert(c,new AVLTree<Integer,Person>());
+			abecedaryTree.insert(c,new BRTree<Integer,Person>());
 		}
 		
 	}
@@ -138,8 +141,8 @@ public class Main extends Application{
 		
 	
 		int k = 0;
-		for(int i = 0; i<1000; i++) {
-			for(int j = 0; j<1000; j++) {
+		for(int i = 0; i<100; i++) {
+			for(int j = 0; j<100; j++) {
 				String name = names[i].split(",")[0];
 				String sexString = names[i].split(",")[1];
 				String lastName = lastNames[j];
@@ -156,17 +159,16 @@ public class Main extends Application{
 				
 				String initial = person.getName().substring(0,1); 
 				
-			
-				System.out.println(initial.getClass());
-				
 				AVLTree<Integer, Person> addingTree = abecedaryTree.search(initial).getValue();
+				
+				System.out.println(name);
 				
 				addingTree.insert(k, person);
 
 				k++;
 			}
 		}
-
+		
 	}
 	
 	public static String[] importNames() throws IOException {

@@ -12,6 +12,7 @@ import org.controlsfx.control.textfield.TextFields;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import model.AVLTree;
 
 public class SearchWindow implements Initializable{
 	
@@ -27,13 +28,16 @@ public class SearchWindow implements Initializable{
     @FXML
     private TextField nameTF;
     
-    private AutoCompletionBinding<String> autoCompletionBinding;
-    private String[] _possibleSuggestionsName = {"Santiago", "Sebastian", "Jhonatan", "Samuel", "Crystal", "Daniela", "Laura", "Natalia", "Juan"};
-    private Set<String> possibleSuggestionsName = new HashSet<>(Arrays.asList(_possibleSuggestionsName));
+    
+    private AVLTree nameData;
+    
+    public SearchWindow(AVLTree nameData) {
+    	this.nameData = nameData;
+    }
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		TextFields.bindAutoCompletion(nameTF, possibleSuggestionsName);
+
 	}
     
     
