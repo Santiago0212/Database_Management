@@ -6,14 +6,14 @@ public class Person {
 	private String code;
 	private String name;
 	private String lastname;
-	private String completeName;
 	private Sex sex;
 	private Date date;
 	private double height;
 	private String nationality;
 	
-	public Person(String code, String name, String lastname, Sex sex, Date date, double height, String nationality) {
-		this.code = code;
+	
+	
+	public Person( String name, String lastname, Sex sex, Date date, double height, String nationality) {
 		this.name = name;
 		this.lastname = lastname;
 		this.sex = sex;
@@ -21,16 +21,11 @@ public class Person {
 		this.height = height;
 		this.nationality = nationality;
 	}
-	
-	public Person(String code, String name, String lastname, Sex sex) {
-		this.code = code;
+	public Person(String code, String name, String lastName, Sex sex) {
 		this.name = name;
-		this.lastname = lastname;
-		this.completeName = this.name+" "+this.lastname;
+		this.lastname = lastName;
 		this.sex = sex;
 	}
-	
-	
 	public String getCode() {
 		return code;
 	}
@@ -74,5 +69,8 @@ public class Person {
 		this.nationality = nationality;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return name;
+	}
 }

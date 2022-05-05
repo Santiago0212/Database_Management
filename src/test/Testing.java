@@ -6,13 +6,13 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;*/
 
-import model.AVLNode;
+import model.Node;
 import model.AVLTree;
 
 public class Testing {
 	
 	private AVLTree<?, ?> tree = new AVLTree();
-	private AVLNode<?, ?>  node;
+	private Node<?, ?>  node;
 	
 	/*public void setupStage1() {
 		node = new Node(5,"w");

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,32 +12,60 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Person;
 import model.Sex;
+import model.AVLNode;
 import model.AVLTree;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
+import java.util.Scanner;
+
 import model.BRTree;
+
 
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
-	static AVLTree<String,BRTree<Integer,Person>> abecedaryTree = new AVLTree <String,BRTree<Integer,Person>>();
+	static AVLTree<Character,BRTree<String,Person>> abecedaryTree = new AVLTree <Character,BRTree<String,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
+		createTree();
+		/*new Thread(()->{
+			try {
+				createCombinations();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});*/
+		
 		try {
-			createTree();
 			createCombinations();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 		launch(args);
+	}
+	
+	private static void createTree() {
+		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
+		for(Character c: alphabet)
+		abecedaryTree.insert(c,new BRTree<String,Person>());
+		int op;
+		/*do {
+			op=menu();
+			send(op);
+		}while(op!=0);*/
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu(abecedaryTree));
+		loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -47,91 +74,6 @@ public class Main extends Application{
 		stage.show();
 		
 	}
-	
-	private static void createTree() {
-		String[] alphabet = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-		for(String c: alphabet) {
-			abecedaryTree.insert(c,new BRTree<Integer,Person>());
-		}
-		
-	}
-/*
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
-		loader.setController(new MainWindow());
-		Parent parent = (Parent) loader.load();
-		Stage stage = new Stage();
-		Scene scene = new Scene(parent);
-		stage.setTitle("AVL Tree Search");
-		stage.setScene(scene);
-		stage.show();
-	}
-	*/
-	public static void pruebaTree() {
-		System.out.println("Select an option to do in your tree:");
-		int op;
-		do {
-			op=menu();
-			send(op,tree);
-		}while(op!=0);
-	}
-
-	private static void send(int op,AVLTree<?,?> t) {
-		switch(op) {
-			case 1:
-				add();
-				break;
-			case 2:
-				delete(t);
-				break;
-			case 3:
-				print(t);
-				break;
-			case 4:
-				prube(t);
-				break;
-		}
-		
-	}
-
-	private static void prube(AVLTree<?,?> t) {
-		t.triggerInorder();
-		//System.out.println(tree.weight(tree.getRoot()));
-		
-	}
-
-	private static void print(AVLTree<?,?> t) {
-		t.print();
-		
-	}
-
-	private static void delete(AVLTree<?,?> t) {
-		System.out.print("Write the key for the node you want to delete\n");
-		int key = sc.nextInt();
-		sc.nextLine();
-		
-		//t.triggerDelete(key);
-		
-	}
-
-	private static void add() {
-		
-		System.out.print("Write the key for your node\n");
-		int key = sc.nextInt();
-		sc.nextLine();
-		System.out.print("Write the value for the node\n");
-		String value = sc.nextLine();
-		
-		tree.insert(key,value);
-	}
-
-	private static int menu() {
-		System.out.println("1: For add a node\n"+"2: For delete a node\n"+
-	"3: For print the values in your tree\n");
-		return sc.nextInt();
-	}
-	
 	
 	public static void createCombinations() throws IOException {
 		String[] names = importNames();
@@ -146,7 +88,7 @@ public class Main extends Application{
 				String lastName = lastNames[j];
 				String code = k+"";
 				
-				Sex sex = Sex.NONE;
+				Sex sex = null;
 				if(sexString.equalsIgnoreCase("BOY")) {
 					sex = Sex.MALE;
 				} else if(sexString.equalsIgnoreCase("GIRL")) {
@@ -155,18 +97,22 @@ public class Main extends Application{
 				
 				Person person = new Person(code,name,lastName,sex);
 				
-				String initial = person.getName().substring(0,1); 
+				Character initial = person.getName().charAt(0); 
 				
-				AVLTree<Integer, Person> addingTree = abecedaryTree.search(initial).getValue();
+				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
 				
 				System.out.println(name);
 				
-				addingTree.insert(k, person);
+				addingTree.insert(code, person);
+				//addingTree.print();
+				
 
 				k++;
 			}
+			
 		}
-		
+		//abecedaryTree.triggerSearch('A').getValue().print();
+
 	}
 	
 	public static String[] importNames() throws IOException {
@@ -232,6 +178,93 @@ public class Main extends Application{
 		
 		return lastNamesList;
 	}
+
+
+
+	/*@Override
+	public void start(Stage primaryStage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
+		loader.setController(new MainWindow());
+		Parent parent = (Parent) loader.load();
+		Stage stage = new Stage();
+		Scene scene = new Scene(parent);
+		stage.setTitle("AVL Tree Search");
+		stage.setScene(scene);
+		stage.show();
+	}*/
+	
+	public static void pruebaTree() {
+		System.out.println("Select an option to do in your tree:");
+		int op;
+		do {
+			op=menu();
+			send(op);
+		}while(op!=0);
+	}
+	
+	private static void send(int op) {
+		switch(op) {
+			case 1:
+				add();
+				break;
+			case 2:
+				//delete();
+				break;
+			case 3:
+				print();
+				break;
+			case 4:
+				//prube();
+				break;
+		}
+		
+	}
+
+	/*private static void prube(Tree<?,?> t) {
+		t.triggerInorder();
+		//System.out.println(tree.weight(tree.getRoot()));
+		
+	}*/
+
+	private static void print() {
+		System.out.println("write the Capital Letter");
+		AVLNode<Character,BRTree<String,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
+		AVLNode.getValue().print();
+		return;
+		
+	}
+
+	/*private static void delete(Tree<?,?> t) {
+		System.out.print("Write the key for the AVLNode you want to delete\n");
+		int key = sc.nextInt();
+		sc.nextLine();
+		
+		t.triggerDelete(key);
+		
+	}*/
+
+	private static void add() {
+		
+		System.out.println("Write the name");
+		String name= sc.nextLine();
+		AVLNode<Character,BRTree<String,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
+		AVLNode.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
+		
+	}
+	
+	public static int getRandom(int min, int max) {
+	    Random random = new Random();
+	    return random.nextInt(max - min) + min;
+	}
+	
+	private static int menu() {
+		System.out.println("1: For add a AVLNode\n"+"2: For delete a AVLNode\n"+
+	"3: For print the values in your tree\n");
+		int out = sc.nextInt();
+		sc.nextLine();
+		return out;
+	}
+
 	
 
 }

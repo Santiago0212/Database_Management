@@ -1,25 +1,23 @@
 package control;
 
-import java.awt.Button;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
-
-import org.controlsfx.control.textfield.AutoCompletionBinding;
-import org.controlsfx.control.textfield.TextFields;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.AVLTree;
 import model.BRTree;
+import model.Person;
 
-public class SearchWindow implements Initializable{
+public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 	
     @FXML
     private TableColumn<?, ?> codeC;
@@ -49,9 +47,9 @@ public class SearchWindow implements Initializable{
     private Button searchNameBTN;
     
     
-    private AVLTree<String, BRTree> nameData;
+    private AVLTree<K,V> nameData;
     
-    public SearchWindow(AVLTree nameData) {
+    public SearchWindow(AVLTree<K,V> nameData) {
     	this.nameData = nameData;
     }
     
@@ -62,18 +60,25 @@ public class SearchWindow implements Initializable{
 	
     @FXML
     void searchName(ActionEvent event) {
-    	
-    	String
+    	ArrayList<Person> people = new ArrayList<>();
     	
     	String name = nameTF.getText();
     	
-    	String initial = name.substring(0,1);
+    	Character initial = name.charAt(0);
     	
-    	BRTree nameTree = nameData.search(initial).getValue();
+    	BRTree<K,V> namesTree = (BRTree<K, V>) nameData.triggerSearch((K) initial).getValue();
+    	
+    	people = (ArrayList<Person>) namesTree.searchAll(name);
+    	
+    	System.out.println(people.isEmpty());
+    	
+    	for(Person p : people) {
+    		System.out.println(p.getName()+" "+p.getLastname());
+    	}
+    	
+    	
     	
     }
-    
-    public void f
     
     
 

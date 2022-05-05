@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	BRNode<K,V> root;
-	
 	@Override
 	public void insert(K key, V value) {
 		BRNode<K,V> node = new BRNode<K,V>(key,value);
@@ -62,14 +61,12 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		autoBalanceBR(current.getDad());
 	}
 	
-	@Override
 	public BRNode<K, V> search(K key) {
-		
 		return searchBR(root, key);
 	}
 
 	// Recursivo
-	public BRNode searchBR(BRNode<K, V> node, K key) {
+	public BRNode<K, V> searchBR(BRNode<K, V> node, K key) {
 		// Caso base
 		if (node == null) {
 			return null;
@@ -84,38 +81,38 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		} else {
 			return searchBR(node.getRight(), key);
 		}
+
 	}
 	
+	public ArrayList<V> searchAll(String name) {
+		ArrayList<V> names = new ArrayList<V>();
+		return searchAll(root, name,names);
+	}
 	
-	public ArrayList<V> searchAll(){
-		ArrayList<V> names = new ArrayList();
+	private ArrayList<V> searchAll(BRNode<K, V> current, String name, ArrayList<V> names) {
 		
+		if (current != null) {
 		
-		
+			searchAll(current.getLeft(),name,names);
+			Person p= (Person)current.getValue();
+			if( p.getName().equals(name))
+				names.add((V)p);
+			searchAll(current.getRight(),name,names);
+		}
 		return names;
 	}
 	
-	public ArrayList<V> searchAll(String name){
-		ArrayList<V> names = new ArrayList();
-		
-		if (node == null) {
-			return null;
+	public void inorder(AVLNode<K, V> AVLNode) {
+		// Caso base
+		if (AVLNode == null) {
+			return;
 		}
+		// Recursivo
 
-		if (key == node.getKey()) {
-			return node;
-		}
-		// Procedimiento recursivo
-		if (key.compareTo(node.getKey())>1) {
-			return searchBR(node.getLeft(), key);
-		} else {
-			return searchBR(node.getRight(), key);
-		}
-		
-		return names;
+		inorder(AVLNode.getLeft());
+		System.out.println(AVLNode.getKey());
+		inorder(AVLNode.getRight());
 	}
-
-	
 	public BRNode<K, V> balanceBR(BRNode<K, V> node) {
 		
 		//System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
