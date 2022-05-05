@@ -39,6 +39,12 @@ public class Main extends Application{
 			}
 		});
 		
+		/*try {
+			createCombinations();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		launch(args);
 	}
 	
@@ -47,10 +53,10 @@ public class Main extends Application{
 		for(Character c: alphabet)
 		abecedaryTree.insert(c,new BRTree<String,Person>());
 		int op;
-		do {
+		/*do {
 			op=menu();
 			send(op);
-		}while(op!=0);
+		}while(op!=0);*/
 	}
 	
 	@Override
@@ -95,12 +101,13 @@ public class Main extends Application{
 				
 				addingTree.insert(code, person);
 				//addingTree.print();
+				
 
 				k++;
 			}
+			
 		}
-		Node<Character,BRTree<String,Person>> node =abecedaryTree.triggerSearch('A');
-		node.getValue().print();
+		abecedaryTree.triggerSearch('A').getValue().print();
 
 	}
 	
