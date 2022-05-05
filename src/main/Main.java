@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +17,10 @@ import model.Person;
 import model.Sex;
 import model.AVLNode;
 import model.AVLTree;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 import model.BRTree;
 
@@ -30,7 +32,6 @@ public class Main extends Application{
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		
 		createTree();
 		/*new Thread(()->{
 			try {
@@ -40,7 +41,6 @@ public class Main extends Application{
 				e.printStackTrace();
 			}
 		});*/
-		
 		try {
 			createCombinations();
 		} catch (IOException e) {
@@ -54,11 +54,6 @@ public class Main extends Application{
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
 		abecedaryTree.insert(c,new BRTree<String,Person>());
-		int op;
-		/*do {
-			op=menu();
-			send(op);
-		}while(op!=0);*/
 	}
 	
 	@Override
@@ -78,11 +73,26 @@ public class Main extends Application{
 	public static void createCombinations() throws IOException {
 		String[] names = importNames();
 		String[] lastNames = importLastNames();
+
+		int numI=100;
+		int numJ=100;
 		
-	
+		int total=numI*numJ;
+		
+		String[ ] paises = new String[] {"Canada","Estados Unidos","Mexico","Belice","Costa rica","El Salvador",
+	    		"Guatemala","Honduras","Nicaragua","Panamá","Argentina","Bolivia","Brasil","Chile","Colombia","Ecuador",
+	    		"Paraguay","Peru","Surinam","Trinidad y Tobago","Uruguay","Venezuela","Antigua y Barbuda","Bahamas","Barbados",
+	    		"Cuba","Dominica","Granada","Guyana","Haiti","Jamaica","República Dominicana","San Cristóbal y Nieves","San Vicente y las Granadinas","Santa Lucia"};
+		double[] poblacionesDouble=new double[] {0.03*total,0.25*total,0.10*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.04*total,0.01*total,0.18*total,0.02*total,0.05*total,0.02*total,0.01*total,0.03*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total};
+	    int [] poblaciones=new int[poblacionesDouble.length];
+	    
+	    for(int i=0;i<poblaciones.length;i++) {
+	    	poblaciones[i]=(int) poblacionesDouble[i];
+	    }
+	   
 		int k = 0;
-		for(int i = 0; i<100; i++) {
-			for(int j = 0; j<100; j++) {
+		for(int i = 0; i<numI; i++) {
+			for(int j = 0; j<numJ; j++) {
 				String name = names[i].split(",")[0];
 				String sexString = names[i].split(",")[1];
 				String lastName = lastNames[j];
@@ -95,13 +105,41 @@ public class Main extends Application{
 					sex = Sex.FEMALE;
 				}
 				
-				Person person = new Person(code,name,lastName,sex);
+				LocalDate startDate = LocalDate.of(1990, 1, 1);
+			    long start = startDate.toEpochDay();
+			    LocalDate endDate = LocalDate.now();
+			    long end = endDate.toEpochDay();
+			    ZoneId defaultZoneId = ZoneId.systemDefault();
+			    long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+			    Date date = Date.from(LocalDate.ofEpochDay(randomEpochDay).atStartOfDay(defaultZoneId).toInstant());
+			    
+			    double randomHeight=getRandom(100,210);
+			    randomHeight=randomHeight/100;
+			    String nationality="";
+			    if(total>100) {
+			    	boolean out=false;
+				    while(!out) {
+				    	int randomNationality=getRandom(1, 35);
+				    	if(poblaciones[randomNationality]>0) {
+				    		nationality=paises[randomNationality];
+				    		out=true;
+				    	}
+				    }
+			    }else {
+			    	int randomNationality=getRandom(1, 35);
+			    	nationality=paises[randomNationality];
+			    }
+			    
+			    
+			   //System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
+				
+				Person person = new Person( name, lastName, sex, date, randomHeight, nationality);
 				
 				Character initial = person.getName().charAt(0); 
 				
 				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
 				
-				System.out.println(name);
+				//System.out.println(name);
 				
 				addingTree.insert(code, person);
 				//addingTree.print();
