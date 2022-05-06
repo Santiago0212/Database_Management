@@ -28,7 +28,15 @@ import model.BRTree;
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
+	
 	static AVLTree<Character,BRTree<String,Person>> abecedaryTree = new AVLTree <Character,BRTree<String,Person>>();
+	static AVLTree<Character,BRTree<String,Person>> abecedaryTreeLastNames = new AVLTree <Character,BRTree<String,Person>>();
+	
+
+	static AVLTree<String,Person> codeTree = new AVLTree <String,Person>();
+	static AVLTree<String,Person> nameTree = new AVLTree <String,Person>();
+	static AVLTree<String,Person> lastNameTree = new AVLTree <String,Person>();
+	
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
@@ -52,15 +60,18 @@ public class Main extends Application{
 	
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
-		for(Character c: alphabet)
-		abecedaryTree.insert(c,new BRTree<String,Person>());
+		for(Character c: alphabet) {
+			abecedaryTree.insert(c,new BRTree<String,Person>());
+			abecedaryTreeLastNames.insert(c,new BRTree<String,Person>());
+		}
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
+		//loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
+		loader.setController(new PrincipalMenu(nameTree,lastNameTree,codeTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -135,15 +146,26 @@ public class Main extends Application{
 				
 				Person person = new Person( name, lastName, sex, date, randomHeight, nationality);
 				
-				Character initial = person.getName().charAt(0); 
+				//Character initialName = person.getName().charAt(0); 
+				//Character initialLastName = person.getLastname().charAt(0); 
 				
-				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
+				//System.out.println(initialLastName+" inicial");
+				
+				//BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
+				//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
 				
 				//System.out.println(name);
+				String nameWithLastName=name+" "+lastName;
+				String lastNameWithName=lastName+" "+name;
 				
-				addingTree.insert(code, person);
-				//addingTree.print();
+				//System.out.println(lastNameWithName);
 				
+				//addingTree.insert(nameWithLastName, person);
+				//addingTreeLastNames.insert(lastNameWithName, person);
+				
+				nameTree.insert(nameWithLastName, person);
+				lastNameTree.insert(lastNameWithName, person);
+				codeTree.insert(code, person);
 
 				k++;
 			}
@@ -156,7 +178,7 @@ public class Main extends Application{
 	public static String[] importNames() throws IOException {
 		String path = "means/babynames-clean.csv";
 		
-		String[] namesList = new String[1000];
+		String[] namesList = new String[6782];
 		
 		File names = new File(path);
 		
@@ -180,7 +202,6 @@ public class Main extends Application{
             if (fr != null)fr.close();
 			
 		}
-		
 		return namesList;
 		
 	}
@@ -188,7 +209,7 @@ public class Main extends Application{
 	public static String[] importLastNames() throws IOException {
 		String path = "means/Names_2010Census.csv";
 		
-		String[] lastNamesList = new String[1000];
+		String[] lastNamesList = new String[162253];
 		
 		File names = new File(path);
 		
@@ -202,9 +223,11 @@ public class Main extends Application{
 			boolean finished = false;
 			
 			while((line = br.readLine())!=null && !finished) {
-				if(i<1000 && i>0) {
+				if(i<1000 && i>=0) {
 					String[] data = line.split(",");
-					lastNamesList[i] = data[0];
+					if(data!=null) {
+						lastNamesList[i] = data[0];
+					}
 				}
 				i++;
 			}
@@ -213,7 +236,6 @@ public class Main extends Application{
             if (fr != null)fr.close();
 			
 		}
-		
 		return lastNamesList;
 	}
 

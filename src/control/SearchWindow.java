@@ -47,10 +47,14 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     private Button searchNameBTN;
     
     
-    private AVLTree<K,V> nameData;
+    private AVLTree<K, V> nameData;
+    private AVLTree<K, V> lastNameData;
+    private AVLTree<K, V> codeData;
     
-    public SearchWindow(AVLTree<K,V> nameData) {
+    public SearchWindow(AVLTree<K, V> nameData,AVLTree<K, V> lastNameData,AVLTree<K, V> codeData) {
     	this.nameData = nameData;
+    	this.lastNameData = lastNameData;
+    	this.codeData = codeData;
     }
     
 	@Override
@@ -66,9 +70,13 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	
     	Character initial = name.charAt(0);
     	
-    	BRTree<K,V> namesTree = (BRTree<K, V>) nameData.triggerSearch((K) initial).getValue();
+    	//BRTree<K,V> namesTree = (BRTree<K, V>) nameData.triggerSearch((K) initial).getValue();
     	
-    	people = (ArrayList<Person>) namesTree.searchAll(name);
+    	//AVLTree<K,V> namesTree=(AVLTree<K, V>) nameData.triggerSearch((K) initial).getValue();
+    	//AVLTree<K,V> lastNamesTree=(AVLTree<K, V>) lastNameData.triggerSearch((K) initial).getValue();
+    	//AVLTree<K,V> codesTree=(AVLTree<K, V>) codeData.triggerSearch((K) initial).getValue();
+    	
+    	//people = (ArrayList<Person>) namesTree.searchAll(name);
     	
     	System.out.println(people.isEmpty());
     	

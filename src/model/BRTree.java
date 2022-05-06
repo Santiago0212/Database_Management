@@ -56,8 +56,6 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 			}
 		}
  
-
-		
 		autoBalanceBR(current.getDad());
 	}
 	
@@ -158,15 +156,15 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		
 	BRNode<K, V> right = node.getRight();
-		
+
+		if(right==null) {
+			return null;
+		}
 		if(node == root) {
 			root = right;
 			root.setColor(Color.BLACK);
 		}
 		
-		if(right==null) {
-			return null;
-		}
 		
 		
 		node.setRight(right.getLeft());
@@ -190,14 +188,14 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	protected BRNode<K, V> rightRotateBR(BRNode<K, V> node) {
 		
 		BRNode<K, V> left = node.getLeft();
-		
+		if(left==null) {
+			return null;
+		}
 		if(node == root) {
 			root = left;
 			root.setColor(Color.BLACK);
 		}
-		if(left==null) {
-			return null;
-		}
+		
 		
 		node.setLeft(left.getRight());
 		left.setRight(node);
