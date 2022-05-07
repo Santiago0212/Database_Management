@@ -308,10 +308,56 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 				persons.add(((Person)current.getValue()));
 			}
 			break;
+		case 3:
+			
+			if((changeToWords(((Person)current.getValue()).getCode())).charAt(0)==c) {
+				persons.add(((Person)current.getValue()));
+			}
 	}
 		findPersons(c,op,current.getRight(),persons);
 		}
 		return persons;
+		
+	}
+	private String changeToWords(String code) {
+		String str = "";
+		for(int i = 0; i<code.length()-1;i++) {
+			String character = code.substring(i,i+1);
+			switch(character) {
+				case "0":
+					str+="A";
+					break;
+				case "1":
+					str+="B";
+					break;
+				case "2":
+					str+="C";
+					break;
+				case "3":
+					str+="D";
+					break;
+				case "4":
+					str+="F";
+					break;
+				case "5":
+					str+="G";
+					break;
+				case "6":
+					str+="H";
+					break;
+				case "7":
+					str+="I";
+					break;
+				case "8":
+					str+="J";
+					break;
+				case "9":
+					str+="K";
+					break;
+			}
+		}
+			return str;
+			
 		
 	}
 }

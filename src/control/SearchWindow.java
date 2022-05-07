@@ -77,6 +77,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		obs = FXCollections.observableArrayList();
 		
     	
@@ -94,6 +95,8 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     @FXML
     void searchName(ActionEvent event) {
     	dataTable.getItems().clear();
+    	
+    	data.filt(1);
     	
     	ArrayList<Person> people = new ArrayList<>();
     	

@@ -24,18 +24,22 @@ public class AVLTree<K extends Comparable <K>,V> {
 	
 	
 	public void filt(int op) {
-		AVLTree<Character,BRTree<String,Person>> newTree = createTree();
+		AVLTree<Character,BRTree<Integer,Person>> newTree = createTree();
+		
+		int k=0;
 		
 		
-		for(Character c : alphabet) {
-			BRTree<String, Person> addingTree = newTree.triggerSearch(c).getValue();
-	
-			ArrayList<Person> persons = searchSim(c,root,op);
-					
-			for(Person p : persons) {
-				addingTree.insert(p.getLastname()+" "+p.getName(), p);
+			for(Character c : alphabet) {
+				BRTree<Integer, Person> addingTree = newTree.triggerSearch(c).getValue();
+		
+				ArrayList<Person> persons = searchSim(c,root,op);
+						
+				for(Person p : persons) {
+					addingTree.insert(k, p);
+					k++;
 				}
-		}
+			}
+		
 		
 		this.root=(AVLNode<K, V>) newTree.getRoot();
 				
@@ -101,10 +105,10 @@ public class AVLTree<K extends Comparable <K>,V> {
 		return search(root, key);
 	}
 	
-	private  AVLTree<Character,BRTree<String,Person>> createTree() {
-		AVLTree<Character,BRTree<String,Person>> newTree = new AVLTree<Character,BRTree<String,Person>>();
+	private  AVLTree<Character, BRTree<Integer, Person>> createTree() {
+		AVLTree<Character,BRTree<Integer,Person>> newTree = new AVLTree<Character,BRTree<Integer,Person>>();
 		for(Character c: alphabet)
-		newTree.insert(c,new BRTree<String,Person>());
+		newTree.insert(c,new BRTree<Integer,Person>());
 		return newTree;
 	}
 	
