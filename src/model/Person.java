@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Person {
@@ -10,6 +11,7 @@ public class Person {
 	private Date date;
 	private double height;
 	private String nationality;
+	private String dateString;
 	
 	public Person(String code ,String name, String lastname, Sex sex, Date date, double height, String nationality) {
 		this.code = code;
@@ -17,6 +19,11 @@ public class Person {
 		this.lastname = lastname;
 		this.sex = sex;
 		this.date = date;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		this.dateString = sdf.format(this.date);
+		
 		this.height = height;
 		this.nationality = nationality;
 	}
@@ -68,6 +75,12 @@ public class Person {
 		this.nationality = nationality;
 	}
 	
+	public String getDateString() {
+		return dateString;
+	}
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
 	@Override
 	public String toString() {
 		return name+" "+lastname+" "+sex+" "+" "+date+" "+height+" "+nationality;

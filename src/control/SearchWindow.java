@@ -45,7 +45,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     private TableColumn<Person, String> codeC;
     
     @FXML
-    private TableColumn<Person, Date> dateC;
+    private TableColumn<Person, String> dateC;
 
     @FXML
     private TableColumn<Person, Double> heightC;
@@ -84,7 +84,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 		lastNameC.setCellValueFactory(new PropertyValueFactory<Person,String>("lastname"));
 		codeC.setCellValueFactory(new PropertyValueFactory<Person,String>("code"));
 		sexC.setCellValueFactory(new PropertyValueFactory<Person,String>("sex"));
-		dateC.setCellValueFactory(new PropertyValueFactory<Person,Date>("date"));	
+		dateC.setCellValueFactory(new PropertyValueFactory<Person,String>("dateString"));	
 		nationalityC.setCellValueFactory(new PropertyValueFactory<Person,String>("nationality"));
 		heightC.setCellValueFactory(new PropertyValueFactory<Person,Double>("height"));
 		
