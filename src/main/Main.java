@@ -30,34 +30,34 @@ import model.BRTree;
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
-	static AVLTree<Character,BRTree<String,Person>> abecedaryTree = new AVLTree <Character,BRTree<String,Person>>();
+	static AVLTree<Character,BRTree<Integer,Person>> abecedaryTree = new AVLTree <Character,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
 		createTree();
-		/*new Thread(()->{
+		new Thread(()->{
 			try {
 				createCombinations();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});*/
+		}).start();
 		
-		try {
+		/*try {
 			createCombinations();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		launch(args);
 	}
 	
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 		for(Character c: alphabet)
-		abecedaryTree.insert(c,new BRTree<String,Person>());
+		abecedaryTree.insert(c,new BRTree<Integer,Person>());
 		/*int op;
 		do {
 			op=menu();
@@ -69,7 +69,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
+		loader.setController(new PrincipalMenu<Character, BRTree<Integer, Person>>(abecedaryTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -83,8 +83,8 @@ public class Main extends Application{
 		String[] names = importNames();
 		String[] lastNames = importLastNames();
 
-		int numI=100;
-		int numJ=100;
+		int numI=6000;
+		int numJ=10000;
 		
 		int total=numI*numJ;
 		
@@ -151,15 +151,15 @@ public class Main extends Application{
 				
 				//System.out.println(initialLastName+" inicial");
 				
-				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
+				BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
 				//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
 				
 
 				String nameWithLastName=name+" "+lastName;
 				
 				//System.out.println(lastNameWithName);
-				
-				addingTree.insert(nameWithLastName, person);
+				System.out.println(k);
+				addingTree.insert(k, person);
 				//addingTreeLastNames.insert(lastNameWithName, person);
 				
 
@@ -167,8 +167,8 @@ public class Main extends Application{
 			}
 			
 		}
-		abecedaryTree.filt(2);
-		abecedaryTree.triggerSearch('C').getValue().print();
+		//abecedaryTree.filt(2);
+		//abecedaryTree.triggerSearch('A').getValue().print();
 
 	}
 	
@@ -252,14 +252,14 @@ public class Main extends Application{
 	
 	public static void pruebaTree() {
 		System.out.println("Select an option to do in your tree:");
-		/*int op;
+		int op;
 		do {
 			op=menu();
 			send(op);
-		}while(op!=0);*/
+		}while(op!=0);
 	}
 	
-	/*private static void send(int op) {
+	private static void send(int op) {
 		switch(op) {
 			case 1:
 				add();
@@ -275,7 +275,7 @@ public class Main extends Application{
 				break;
 		}
 		
-	}*/
+	}
 
 	/*private static void prube(Tree<?,?> t) {
 		t.triggerInorder();
@@ -285,7 +285,7 @@ public class Main extends Application{
 
 	private static void print() {
 		System.out.println("write the Capital Letter");
-		AVLNode<Character,BRTree<String,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
+		AVLNode<Character,BRTree<Integer,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
 		AVLNode.getValue().print();
 		return;
 		
@@ -300,14 +300,13 @@ public class Main extends Application{
 		
 	}*/
 
-	/*private static void add() {
-		
+	private static void add() {
 		System.out.println("Write the name");
 		String name= sc.nextLine();
-		AVLNode<Character,BRTree<String,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
-		AVLNode.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
+		AVLNode<Character,BRTree<Integer,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
+	/*	AVLNode.getValue().insert(, new Person("",name,null, null, new Date(), 0, null));*/
 		
-	}*/
+	}
 	
 	public static int getRandom(int min, int max) {
 	    Random random = new Random();
