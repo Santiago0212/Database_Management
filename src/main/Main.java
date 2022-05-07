@@ -83,8 +83,8 @@ public class Main extends Application{
 		String[] names = importNames();
 		String[] lastNames = importLastNames();
 
-		int numI=6000;
-		int numJ=10000;
+		int numI=1000;
+		int numJ=1000;
 		
 		int total=numI*numJ;
 		

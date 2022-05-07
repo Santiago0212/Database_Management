@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_202"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="src/lib/controlsfx-8.40.14.jar"/>
-	<classpathentry kind="lib" path="src/lib/controlsfx-samples-8.40.14.jar"/>
-	<classpathentry kind="lib" path="src/lib/fxsampler-1.0.10.jar"/>
-	<classpathentry kind="lib" path="/Int 1/src/Library/gson-2.9.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
