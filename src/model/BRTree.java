@@ -140,7 +140,8 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		
 			searchAllCodes(current.getLeft(),code,codes);
 			Person p= (Person)current.getValue();
-			if( p.getCode().equals(code))
+			System.out.println(((Person)current.getValue()).getCode());
+			if(p.getCode().equals(code))
 				codes.add((V)p);
 			searchAllCodes(current.getRight(),code,codes);
 		}
@@ -327,7 +328,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 			}
 			break;
 		case 3:
-			
+			//System.out.println(((Person)current.getValue()).getCode());
 			if((changeToWords(((Person)current.getValue()).getCode())).charAt(0)==c) {
 				persons.add(((Person)current.getValue()));
 			}
@@ -339,7 +340,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	}
 	public static String changeToWords(String code) {
 		String str = "";
-		for(int i = 0; i<code.length()-1;i++) {
+		for(int i = 0; i<=code.length()-1;i++) {
 			String character = code.substring(i,i+1);
 			switch(character) {
 				case "0":

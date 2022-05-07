@@ -33,13 +33,13 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		
 		createTree();
-		new Thread(()->{
+		/*new Thread(()->{*/
 			try {
 				createCombinations();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}).start();
+		/*}).start();*/
 		
 		launch(args);
 	}
@@ -99,6 +99,8 @@ public class Main extends Application{
 				String sexString = names[i].split(",")[1];
 				String lastName = lastNames[j];
 				String code = k+"";
+				
+				//System.out.println(name);
 				
 				if(name!=null && sexString!=null && lastName!=null && code!=null) {
 					
