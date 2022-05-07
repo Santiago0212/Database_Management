@@ -11,9 +11,8 @@ public class Person {
 	private double height;
 	private String nationality;
 	
-	
-	
-	public Person( String name, String lastname, Sex sex, Date date, double height, String nationality) {
+	public Person(String code ,String name, String lastname, Sex sex, Date date, double height, String nationality) {
+		this.code = code;
 		this.name = name;
 		this.lastname = lastname;
 		this.sex = sex;
@@ -71,6 +70,6 @@ public class Person {
 	
 	@Override
 	public String toString() {
-		return name;
+		return name+" "+lastname+" "+sex+" "+" "+date+" "+height+" "+nationality;
 	}
 }

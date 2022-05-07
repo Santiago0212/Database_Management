@@ -29,13 +29,9 @@ public class PrincipalMenu<K extends Comparable<K>, V> {
     
     
     private AVLTree<K, V> nameData;
-    private AVLTree<K, V> lastNameData;
-    private AVLTree<K, V> codeData;
     
-    public PrincipalMenu(AVLTree<K, V> nameData,AVLTree<K, V> lastNameData,AVLTree<K, V> codeData) {
+    public PrincipalMenu(AVLTree<K, V> nameData) {
     	this.nameData = nameData;
-    	this.lastNameData = lastNameData;
-    	this.codeData = codeData;
     }
 
     @FXML
@@ -68,7 +64,7 @@ public class PrincipalMenu<K extends Comparable<K>, V> {
     @FXML
     void search(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/SearchWindow.fxml"));
-		loader.setController(new SearchWindow(this.nameData,this.lastNameData,this.codeData));
+		loader.setController(new SearchWindow<K, V>(this.nameData));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);

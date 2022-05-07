@@ -1,6 +1,6 @@
 package model;
 
-public class BRNode<K extends Comparable<K>,V> extends Node<K,V>{
+public class BRNode<K extends Comparable<K>,V> extends AVLNode<K,V>{
 	
 	private Color color;
 	private BRNode<K, V> dad;

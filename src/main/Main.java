@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-
 import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,50 +27,39 @@ import model.BRTree;
 public class Main extends Application{
 
 	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
-	
-	static AVLTree<Character,BRTree<String,Person>> abecedaryTree = new AVLTree <Character,BRTree<String,Person>>();
-	static AVLTree<Character,BRTree<String,Person>> abecedaryTreeLastNames = new AVLTree <Character,BRTree<String,Person>>();
-	
-
-	static AVLTree<String,Person> codeTree = new AVLTree <String,Person>();
-	static AVLTree<String,Person> nameTree = new AVLTree <String,Person>();
-	static AVLTree<String,Person> lastNameTree = new AVLTree <String,Person>();
-	
+	static AVLTree<Character,BRTree<Integer,Person>> abecedaryTree = new AVLTree <Character,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
+		
 		createTree();
-		/*new Thread(()->{
+		new Thread(()->{
 			try {
 				createCombinations();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});*/
-		try {
-			createCombinations();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}).start();
+		
 		launch(args);
 	}
 	
 	private static void createTree() {
 		Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
-		for(Character c: alphabet) {
-			abecedaryTree.insert(c,new BRTree<String,Person>());
-			abecedaryTreeLastNames.insert(c,new BRTree<String,Person>());
-		}
+		for(Character c: alphabet)
+		abecedaryTree.insert(c,new BRTree<Integer,Person>());
+		/*int op;
+		do {
+			op=menu();
+			send(op);
+		}while(op!=0);*/
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		//loader.setController(new PrincipalMenu<Character, BRTree<String, Person>>(abecedaryTree));
-		loader.setController(new PrincipalMenu(nameTree,lastNameTree,codeTree));
+		loader.setController(new PrincipalMenu<Character, BRTree<Integer, Person>>(abecedaryTree));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);
@@ -85,8 +73,8 @@ public class Main extends Application{
 		String[] names = importNames();
 		String[] lastNames = importLastNames();
 
-		int numI=100;
-		int numJ=100;
+		int numI=1000;
+		int numJ=1000;
 		
 		int total=numI*numJ;
 		
@@ -97,11 +85,14 @@ public class Main extends Application{
 		double[] poblacionesDouble=new double[] {0.03*total,0.25*total,0.10*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.04*total,0.01*total,0.18*total,0.02*total,0.05*total,0.02*total,0.01*total,0.03*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total};
 	    int [] poblaciones=new int[poblacionesDouble.length];
 	    
+	    int totalx=0;
 	    for(int i=0;i<poblaciones.length;i++) {
 	    	poblaciones[i]=(int) poblacionesDouble[i];
+	    	totalx+=poblaciones[i];
 	    }
 	   
 		int k = 0;
+		
 		for(int i = 0; i<numI; i++) {
 			for(int j = 0; j<numJ; j++) {
 				String name = names[i].split(",")[0];
@@ -109,68 +100,67 @@ public class Main extends Application{
 				String lastName = lastNames[j];
 				String code = k+"";
 				
-				Sex sex = null;
-				if(sexString.equalsIgnoreCase("BOY")) {
-					sex = Sex.MALE;
-				} else if(sexString.equalsIgnoreCase("GIRL")) {
-					sex = Sex.FEMALE;
-				}
-				
-				LocalDate startDate = LocalDate.of(1990, 1, 1);
-			    long start = startDate.toEpochDay();
-			    LocalDate endDate = LocalDate.now();
-			    long end = endDate.toEpochDay();
-			    ZoneId defaultZoneId = ZoneId.systemDefault();
-			    long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
-			    Date date = Date.from(LocalDate.ofEpochDay(randomEpochDay).atStartOfDay(defaultZoneId).toInstant());
-			    
-			    double randomHeight=getRandom(100,210);
-			    randomHeight=randomHeight/100;
-			    String nationality="";
-			    if(total>100) {
-			    	boolean out=false;
-				    while(!out) {
+				if(name!=null && sexString!=null && lastName!=null && code!=null) {
+					
+					Sex sex = null;
+					if(sexString.equalsIgnoreCase("BOY")) {
+						sex = Sex.MALE;
+					} else if(sexString.equalsIgnoreCase("GIRL")) {
+						sex = Sex.FEMALE;
+					}
+					
+					LocalDate startDate = LocalDate.of(1990, 1, 1);
+				    long start = startDate.toEpochDay();
+				    LocalDate endDate = LocalDate.now();
+				    long end = endDate.toEpochDay();
+				    ZoneId defaultZoneId = ZoneId.systemDefault();
+				    long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+				    Date date = Date.from(LocalDate.ofEpochDay(randomEpochDay).atStartOfDay(defaultZoneId).toInstant());
+				    
+				    double randomHeight=getRandom(100,210);
+				    randomHeight=randomHeight/100;
+				    String nationality="";
+				    if(total>100) {
+				    	boolean out=false;
+					    while(!out) {
+					    	int randomNationality=getRandom(1, 35);
+					    	if(poblaciones[randomNationality]>0) {
+					    		nationality=paises[randomNationality];
+					    		out=true;
+					    	}
+					    }
+				    }else {
 				    	int randomNationality=getRandom(1, 35);
-				    	if(poblaciones[randomNationality]>0) {
-				    		nationality=paises[randomNationality];
-				    		out=true;
-				    	}
+				    	nationality=paises[randomNationality];
 				    }
-			    }else {
-			    	int randomNationality=getRandom(1, 35);
-			    	nationality=paises[randomNationality];
-			    }
-			    
-			    
-			   //System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
-				
-				Person person = new Person( name, lastName, sex, date, randomHeight, nationality);
-				
-				//Character initialName = person.getName().charAt(0); 
-				//Character initialLastName = person.getLastname().charAt(0); 
-				
-				//System.out.println(initialLastName+" inicial");
-				
-				//BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
-				//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
-				
-				//System.out.println(name);
-				String nameWithLastName=name+" "+lastName;
-				String lastNameWithName=lastName+" "+name;
-				
-				//System.out.println(lastNameWithName);
-				
-				//addingTree.insert(nameWithLastName, person);
-				//addingTreeLastNames.insert(lastNameWithName, person);
-				
-				nameTree.insert(nameWithLastName, person);
-				lastNameTree.insert(lastNameWithName, person);
-				codeTree.insert(code, person);
-
-				k++;
+				    
+				    
+				   //System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
+					
+					Person person = new Person(k+"", name, lastName, sex, date, randomHeight, nationality);
+					
+					Character initialName = person.getName().charAt(0); 
+					//Character initialLastName = person.getLastname().charAt(0); 
+					
+					//System.out.println(initialLastName+" inicial");
+					
+					BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
+					//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
+					
+		
+					String nameWithLastName=name+" "+lastName;
+					
+					//System.out.println(lastNameWithName);
+					//System.out.println(k);
+					addingTree.insert(k, person);
+					//addingTreeLastNames.insert(lastNameWithName, person);
+					
+		
+					k++;
+				}
 			}
-			
 		}
+		//abecedaryTree.filt(2);
 		//abecedaryTree.triggerSearch('A').getValue().print();
 
 	}
@@ -178,7 +168,7 @@ public class Main extends Application{
 	public static String[] importNames() throws IOException {
 		String path = "means/babynames-clean.csv";
 		
-		String[] namesList = new String[6782];
+		String[] namesList = new String[1000];
 		
 		File names = new File(path);
 		
@@ -202,6 +192,7 @@ public class Main extends Application{
             if (fr != null)fr.close();
 			
 		}
+		
 		return namesList;
 		
 	}
@@ -209,7 +200,7 @@ public class Main extends Application{
 	public static String[] importLastNames() throws IOException {
 		String path = "means/Names_2010Census.csv";
 		
-		String[] lastNamesList = new String[162253];
+		String[] lastNamesList = new String[1000];
 		
 		File names = new File(path);
 		
@@ -223,11 +214,9 @@ public class Main extends Application{
 			boolean finished = false;
 			
 			while((line = br.readLine())!=null && !finished) {
-				if(i<1000 && i>=0) {
+				if(i<1000 && i>0) {
 					String[] data = line.split(",");
-					if(data!=null) {
-						lastNamesList[i] = data[0];
-					}
+					lastNamesList[i] = data[0];
 				}
 				i++;
 			}
@@ -236,23 +225,10 @@ public class Main extends Application{
             if (fr != null)fr.close();
 			
 		}
+		
 		return lastNamesList;
 	}
 
-
-
-	/*@Override
-	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/MainWindow.fxml"));
-		loader.setController(new MainWindow());
-		Parent parent = (Parent) loader.load();
-		Stage stage = new Stage();
-		Scene scene = new Scene(parent);
-		stage.setTitle("AVL Tree Search");
-		stage.setScene(scene);
-		stage.show();
-	}*/
-	
 	public static void pruebaTree() {
 		System.out.println("Select an option to do in your tree:");
 		int op;
@@ -288,7 +264,7 @@ public class Main extends Application{
 
 	private static void print() {
 		System.out.println("write the Capital Letter");
-		AVLNode<Character,BRTree<String,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
+		AVLNode<Character,BRTree<Integer,Person>> AVLNode =abecedaryTree.triggerSearch(sc.next().charAt(0));
 		AVLNode.getValue().print();
 		return;
 		
@@ -304,11 +280,10 @@ public class Main extends Application{
 	}*/
 
 	private static void add() {
-		
 		System.out.println("Write the name");
 		String name= sc.nextLine();
-		AVLNode<Character,BRTree<String,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
-		AVLNode.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
+		AVLNode<Character,BRTree<Integer,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
+	/*	AVLNode.getValue().insert(, new Person("",name,null, null, new Date(), 0, null));*/
 		
 	}
 	

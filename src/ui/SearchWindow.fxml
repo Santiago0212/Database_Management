@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="1139.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane layoutX="55.0" layoutY="48.0" prefHeight="407.0" prefWidth="507.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Name">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="507.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="923.0">
                      <children>
                         <Label layoutX="14.0" layoutY="26.0" text="Search by name:">
                            <font>
@@ -28,7 +28,7 @@
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="searchNameBTN" layoutX="352.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchName" prefHeight="44.0" prefWidth="70.0" text="Button" />
+                        <Button fx:id="searchNameBTN" layoutX="352.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchName" prefHeight="44.0" prefWidth="70.0" text="Buscar" />
                      </children>
                   </AnchorPane>
             </content>
@@ -47,6 +47,7 @@
                               <Font size="20.0" />
                            </font>
                         </TextField>
+                        <Button fx:id="lastNameBTN" layoutX="320.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchLastName" prefHeight="41.0" prefWidth="76.0" text="Buscar" />
                      </children>
                   </AnchorPane>
                </content>
@@ -89,11 +90,15 @@
             </Tab>
         </tabs>
       </TabPane>
-      <TableView fx:id="dataTable" layoutX="72.0" layoutY="467.0" prefHeight="170.0" prefWidth="431.0">
+      <TableView fx:id="dataTable" layoutX="14.0" layoutY="252.0" prefHeight="456.0" prefWidth="1112.0">
         <columns>
           <TableColumn fx:id="nameC" prefWidth="137.0" text="Name" />
           <TableColumn fx:id="lastNameC" prefWidth="118.0" text="Last Name" />
             <TableColumn fx:id="codeC" prefWidth="175.0" text="Code" />
+            <TableColumn fx:id="sexC" prefWidth="175.0" text="Sex" />
+            <TableColumn fx:id="dateC" prefWidth="175.0" text="Birth Date" />
+            <TableColumn fx:id="nationalityC" prefWidth="175.0" text="Nationality" />
+            <TableColumn fx:id="heightC" prefWidth="175.0" text="Height" />
         </columns>
       </TableView>
    </children>

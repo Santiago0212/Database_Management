@@ -4,8 +4,9 @@ public class AVLNode <K extends Comparable <K>,V>implements Comparable<AVLNode<K
 	
 	private K key;
 	private V value;
+	private boolean looked;
 	
-	
+
 	//Enlaces
 	private AVLNode<K, V> dad;
 	private AVLNode<K, V> left;
@@ -51,6 +52,16 @@ public class AVLNode <K extends Comparable <K>,V>implements Comparable<AVLNode<K
 	}
 	public void setRight(AVLNode<K, V> right) {
 		this.right = right;
+	}
+	
+	public boolean isLooked() {
+		return looked;
+	}
+
+
+
+	public void setLooked(boolean looked) {
+		this.looked = looked;
 	}
 	
 	public int calculateHeightR() {

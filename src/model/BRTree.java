@@ -14,12 +14,20 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		} else {
 			node.setColor(Color.RED);
 			insertBR(node, root);
+			//System.out.println(node.getValue());
 			autoBalanceBR(node);
 		}
 
 	}
+	public BRNode<K, V> getRoot() {
+		return root;
+	}
+	public void setRoot(BRNode<K, V> root) {
+		this.root = root;
+	}
 	protected void insertBR(BRNode<K, V> node, BRNode<K, V> current) {
-		
+		//System.out.println("Quiere entrar "+node.getKey());
+		//System.out.println(current.getKey());
 		if(node.compareTo(current)<=-1) {
 			if(current.getLeft() == null) {
 				current.setLeft(node);
@@ -40,22 +48,25 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	}
 	
 	public void autoBalanceBR(BRNode<K, V> current) {
-		
+		//print();
 		if(current == null) {
 			return;
-		} if(current.getDad() == null) {
+		} 
+		
+		if(current.getDad() == null) {
+			 balanceBR(root);
 			return;
 		} 
-		if(current.getDad().getLeft() != null) {
-			if(current == current.getDad().getLeft()) {
-				current.getDad().setLeft(balanceBR(current));
-			} 
-		} if(current.getDad()!=null &&current.getDad().getRight() != null) {
-			if(current == current.getDad().getRight()) {
-				current.getDad().setRight(balanceBR(current));
-			}
+		 
+		
+			
+		if(balanceBR(current)==root) {
+			return;
 		}
- 
+			
+		
+		
+			
 		autoBalanceBR(current.getDad());
 	}
 	
@@ -82,22 +93,40 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 
 	}
 	
-	public ArrayList<V> searchAll(String name) {
+	public ArrayList<V> searchAllNames(String name) {
 		ArrayList<V> names = new ArrayList<V>();
-		return searchAll(root, name,names);
+		return searchAllNames(root, name,names);
 	}
 	
-	private ArrayList<V> searchAll(BRNode<K, V> current, String name, ArrayList<V> names) {
+	private ArrayList<V> searchAllNames(BRNode<K, V> current, String name, ArrayList<V> names) {
 		
 		if (current != null) {
 		
-			searchAll(current.getLeft(),name,names);
+			searchAllNames(current.getLeft(),name,names);
 			Person p= (Person)current.getValue();
 			if( p.getName().equals(name))
 				names.add((V)p);
-			searchAll(current.getRight(),name,names);
+			searchAllNames(current.getRight(),name,names);
 		}
 		return names;
+	}
+	
+	public ArrayList<V> searchAllLastNames(String lastName) {
+		ArrayList<V> lastNames = new ArrayList<V>();
+		return searchAllLastNames(root, lastName,lastNames);
+	}
+	
+	private ArrayList<V> searchAllLastNames(BRNode<K, V> current, String lastName, ArrayList<V> lastNames) {
+		
+		if (current != null) {
+		
+			searchAllLastNames(current.getLeft(),lastName,lastNames);
+			Person p= (Person)current.getValue();
+			if( p.getLastname().equals(lastName))
+				lastNames.add((V)p);
+			searchAllLastNames(current.getRight(),lastName,lastNames);
+		}
+		return lastNames;
 	}
 	
 	public void inorder(AVLNode<K, V> AVLNode) {
@@ -111,6 +140,7 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		System.out.println(AVLNode.getKey());
 		inorder(AVLNode.getRight());
 	}
+	
 	public BRNode<K, V> balanceBR(BRNode<K, V> node) {
 		
 		//System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
@@ -125,27 +155,39 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		
 		BRNode<K, V> dad = node.getDad();
 		BRNode<K, V> uncle = node.getUncle();
+		BRNode<K, V> grandf = node.getDad().getDad();
 		
-		if(dad.getColor()==Color.RED) {
+		if(dad.getColor()==Color.RED&&node.getColor()==Color.RED) {
 			if(node.getUncle()!=null&&uncle.getColor()==Color.RED) {
 				dad.setColor(Color.BLACK);
 				uncle.setColor(Color.BLACK);
-				dad.getDad().setColor(Color.RED);
-				balanceBR(dad.getDad());
+				grandf.setColor(Color.RED);
+				autoBalanceBR(grandf);
 			}else {
 				if(dad.getRight()==node) {
-					leftRotateBR(dad.getDad());
-					dad.setColor(Color.BLACK);
-					balanceBR(dad.getLeft());
-					if(dad.getDad()!=null)
-					rightRotateBR(dad.getDad());
+					if(grandf.getRight()==dad) {
+						leftRotateBR(grandf);
+						dad.setColor(Color.BLACK);
+						balanceBR(dad);
+					}else {
+						leftRotateBR(dad);
+						dad.setColor(Color.BLACK);
+						balanceBR(dad.getLeft());
+						if(dad.getDad()!=null)
+						rightRotateBR(dad.getDad().getDad());
+					}
 				}
 				else {
-					rightRotateBR(dad.getDad());
-					dad.setColor(Color.BLACK);
-					balanceBR(dad.getRight());
-					if(dad.getDad()!=null)
-					leftRotateBR(dad.getDad());
+					if(grandf.getLeft()==dad) {
+						rightRotateBR(grandf);
+						balanceBR(dad);
+					}else {
+						rightRotateBR(dad);
+						dad.setColor(Color.BLACK);
+						balanceBR(dad.getRight());
+						if(dad.getDad()!=null)
+						leftRotateBR(dad.getDad().getDad());
+					}
 				}
 			}
 		}
@@ -156,15 +198,15 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		
 	BRNode<K, V> right = node.getRight();
-
-		if(right==null) {
-			return null;
-		}
-		if(node == root) {
+		
+		if(node == root&right!=null) {
 			root = right;
 			root.setColor(Color.BLACK);
 		}
 		
+		if(right==null) {
+			return null;
+		}
 		
 		
 		node.setRight(right.getLeft());
@@ -188,14 +230,14 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	protected BRNode<K, V> rightRotateBR(BRNode<K, V> node) {
 		
 		BRNode<K, V> left = node.getLeft();
-		if(left==null) {
-			return null;
-		}
-		if(node == root) {
+		
+		if(node == root&left!=null) {
 			root = left;
 			root.setColor(Color.BLACK);
 		}
-		
+		if(left==null) {
+			return null;
+		}
 		
 		node.setLeft(left.getRight());
 		left.setRight(node);
@@ -238,9 +280,38 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	    System.out.print("\n");
 	    for (int i = 10; i < space; i++)
 	        System.out.print(" ");
-	    System.out.print(root.getKey()+" "+root.getColor()+" " +root.getValue() + "\n");
+	    System.out.print(root.getKey()+" "+root.getColor()+ "\n");
 	 
 	    // Process left child
 	    printBR(root.getLeft(), space);
+	}
+	public ArrayList<Person> findPersons(Character c, int op) {
+		ArrayList<Person> persons = new ArrayList<>();
+		return findPersons( c,  op, root,persons);
+	}
+	
+	private ArrayList<Person> findPersons(Character c, int op, BRNode<K, V> current,ArrayList<Person> persons) {
+		if (current != null) {
+			
+		
+		// Recursivo
+
+		findPersons(c, op,current.getLeft(),persons);
+		switch(op) {
+		case 1:
+			if(((Person)current.getValue()).getName().charAt(0)==c) {
+				persons.add(((Person)current.getValue()));
+			}
+			break;
+		case 2:
+			if(((Person)current.getValue()).getLastname().charAt(0)==c) {
+				persons.add(((Person)current.getValue()));
+			}
+			break;
+	}
+		findPersons(c,op,current.getRight(),persons);
+		}
+		return persons;
+		
 	}
 }
