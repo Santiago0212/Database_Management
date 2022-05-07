@@ -64,6 +64,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 	
     @FXML
     void searchName(ActionEvent event) {
+    	nameData.filt(1);
     	ArrayList<Person> people = new ArrayList<>();
     	
     	String name = nameTF.getText();
@@ -74,11 +75,13 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	
     	people = (ArrayList<Person>) namesTree.searchAll(name);
     	
-    	System.out.println(people.isEmpty());
+    	/*System.out.println(people.isEmpty());
     	
     	for(Person p : people) {
     		System.out.println(p.getName()+" "+p.getLastname());
-    	}
+    	}*/
+    	
+    	
     	
     	
     	

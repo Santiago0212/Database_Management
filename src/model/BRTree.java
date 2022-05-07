@@ -18,6 +18,12 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		}
 
 	}
+	public BRNode<K, V> getRoot() {
+		return root;
+	}
+	public void setRoot(BRNode<K, V> root) {
+		this.root = root;
+	}
 	protected void insertBR(BRNode<K, V> node, BRNode<K, V> current) {
 		
 		if(node.compareTo(current)<=-1) {
@@ -113,6 +119,7 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		System.out.println(AVLNode.getKey());
 		inorder(AVLNode.getRight());
 	}
+	
 	public BRNode<K, V> balanceBR(BRNode<K, V> node) {
 		
 		//System.out.println("Key: "+node.getKey()+" Balance: "+nodeBalance);
@@ -244,5 +251,33 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	 
 	    // Process left child
 	    printBR(root.getLeft(), space);
+	}
+	public ArrayList<Person> findPersons(Character c, int op) {
+		return findPersons( c,  op, root);
+	}
+	
+	private ArrayList<Person> findPersons(Character c, int op, BRNode<K, V> current) {
+		ArrayList<Person> persons = new ArrayList<>();
+		if (current == null) {
+			return null;
+		}
+		// Recursivo
+
+		findPersons(c, op,current.getLeft());
+		switch(op) {
+		case 1:
+			if(((Person)current.getValue()).getName().charAt(0)==c) {
+				persons.add(((Person)current.getValue()));
+			}
+			break;
+		case 2:
+			if(((Person)current.getValue()).getLastname().charAt(0)==c) {
+				persons.add(((Person)current.getValue()));
+			}
+			break;
+	}
+		findPersons(c,op,current.getRight());
+		return persons;
+		
 	}
 }

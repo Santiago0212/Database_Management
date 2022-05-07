@@ -8,6 +8,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 
 	protected AVLNode<K,V> root;
 	private final static int COUNT = 15;
+	private Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 
 	public void insert(K key, V value) {
 		AVLNode<K, V> AVLNode = new AVLNode<K, V>(key,value);
@@ -19,6 +20,39 @@ public class AVLTree<K extends Comparable <K>,V> {
 			autoBalance(AVLNode.getDad());
 		}
 
+	}
+	
+	
+	public void filt(int op) {
+		AVLTree<Character,BRTree<String,Person>> newTree = createTree();
+		
+		
+		for(Character c : alphabet) {
+			BRTree<String, Person> addingTree = newTree.triggerSearch(c).getValue();
+	
+			ArrayList<Person> persons = searchSim(c,root,op);
+					
+			for(Person p : persons)
+				addingTree.insert(p.getCode(), p);
+		}
+		
+		this.root=(AVLNode<K, V>) newTree.getRoot();
+				
+	}
+		
+	
+	
+	private ArrayList<Person> searchSim(Character c, AVLNode<K, V> root2,int op) {
+		ArrayList<Person> persons;
+		if (root2 == null) {
+			return null;
+		}
+		// Recursivo
+
+		inorder(root2.getLeft());
+		persons =((BRTree)root2.getValue()).findPersons(c,op);
+		inorder(root2.getRight());
+		return persons;
 	}
 	
 	protected void insert(AVLNode<K, V> AVLNode, AVLNode<K, V> current) {
@@ -63,7 +97,14 @@ public class AVLTree<K extends Comparable <K>,V> {
 	public AVLNode<K, V> triggerSearch(K key) {
 		return search(root, key);
 	}
-
+	
+	private  AVLTree<Character,BRTree<String,Person>> createTree() {
+		AVLTree<Character,BRTree<String,Person>> newTree = new AVLTree<Character,BRTree<String,Person>>();
+		for(Character c: alphabet)
+		newTree.insert(c,new BRTree<String,Person>());
+		return newTree;
+	}
+	
 	// Recursivo
 	public AVLNode<K, V> search(AVLNode<K, V> AVLNode, K key) {
 		// Caso base
