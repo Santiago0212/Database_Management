@@ -129,6 +129,24 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		return lastNames;
 	}
 	
+	public ArrayList<V> searchAllCodes(String code) {
+		ArrayList<V> codes = new ArrayList<V>();
+		return searchAllLastNames(root, code,codes);
+	}
+	
+	private ArrayList<V> searchAllCodes(BRNode<K, V> current, String code, ArrayList<V> codes) {
+		
+		if (current != null) {
+		
+			searchAllCodes(current.getLeft(),code,codes);
+			Person p= (Person)current.getValue();
+			if( p.getCode().equals(code))
+				codes.add((V)p);
+			searchAllCodes(current.getRight(),code,codes);
+		}
+		return codes;
+	}
+	
 	public void inorder(AVLNode<K, V> AVLNode) {
 		// Caso base
 		if (AVLNode == null) {
@@ -319,7 +337,7 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		return persons;
 		
 	}
-	private String changeToWords(String code) {
+	public static String changeToWords(String code) {
 		String str = "";
 		for(int i = 0; i<code.length()-1;i++) {
 			String character = code.substring(i,i+1);

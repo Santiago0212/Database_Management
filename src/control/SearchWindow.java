@@ -65,6 +65,12 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     @FXML
     private Button lastNameBTN;
     
+    @FXML
+    private Button completeNameBTN;
+    
+    @FXML
+    private Button codeBTN;
+    
     
     private AVLTree<K,V> data;
     
@@ -134,6 +140,56 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	dataTable.refresh();
     }
     
+    @FXML
+    void searchCode(ActionEvent event) {
+    	dataTable.getItems().clear();
+    	
+    	data.filt(3);
+    	
+    	ArrayList<Person> people = new ArrayList<>();
+    	
+    	String code = codeTF.getText().toUpperCase();
+    	
+    	Character initial = BRTree.changeToWords(code).charAt(0);
+    
+    	BRTree<K,V> lastNamesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
+    	
+    	people = (ArrayList<Person>) lastNamesTree.searchAllCodes(code);
+    	
+    	obs.addAll(people);
+    	
+    	dataTable.refresh();
+    }
+
+    @FXML
+    void searchCompleteName(ActionEvent event) {
+    	dataTable.getItems().clear();
+    	
+    	data.filt(1);
+    	
+    	ArrayList<Person> people = new ArrayList<>();
+    	
+    	String completeName = completeNameTF.getText().toUpperCase();
+    	
+    	String[] completeNameArr = completeName.split(" ");
+    	
+    	String name = completeNameArr[0];
+    	String lastName = completeNameArr[1];
+    	
+    	Character initial = name.charAt(0);
+    	
+    	BRTree<K,V> namesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
+    	
+    	people = (ArrayList<Person>) namesTree.searchAllNames(name);
+    	
+    	for(Person p : people) {
+    		if(p.getLastname().compareTo(lastName)==0) {
+    			obs.add(p);
+    		}
+    	}
+    	
+    	dataTable.refresh();
+    }
     
 
 }

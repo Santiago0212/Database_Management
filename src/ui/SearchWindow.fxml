@@ -66,6 +66,7 @@
                               <Font size="20.0" />
                            </font>
                         </TextField>
+                        <Button fx:id="completeNameBTN" layoutX="352.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchCompleteName" prefHeight="44.0" prefWidth="81.0" text="Code" />
                      </children>
                   </AnchorPane>
                </content>
@@ -84,6 +85,7 @@
                               <Font size="20.0" />
                            </font>
                         </TextField>
+                        <Button fx:id="codeBTN" layoutX="359.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchCode" prefHeight="54.0" prefWidth="82.0" text="Buscar" />
                      </children>
                   </AnchorPane>
                </content>
