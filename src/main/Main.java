@@ -126,14 +126,12 @@ public class Main extends Application{
 			    
 			    double randomHeight=getRandom(100,210);
 			    randomHeight=randomHeight/100;
-			    
 			    String nationality="";
 			    if(total>100) {
 			    	boolean out=false;
 				    while(!out) {
 				    	int randomNationality=getRandom(1, 35);
 				    	if(poblaciones[randomNationality]>0) {
-				    		poblaciones[randomNationality]--;
 				    		nationality=paises[randomNationality];
 				    		out=true;
 				    	}
@@ -144,25 +142,33 @@ public class Main extends Application{
 			    }
 			    
 			    
-			   System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
+			   //System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
 				
-				Person person = new Person( name, lastName, sex, date, randomHeight, nationality);
+				Person person = new Person(k+"", name, lastName, sex, date, randomHeight, nationality);
 				
-				Character initial = person.getName().charAt(0); 
+				Character initialName = person.getName().charAt(0); 
+				//Character initialLastName = person.getLastname().charAt(0); 
 				
-				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initial).getValue();
+				//System.out.println(initialLastName+" inicial");
 				
-				System.out.println(name);
+				BRTree<String, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
+				//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
 				
-				addingTree.insert(code, person);
-				//addingTree.print();
+
+				String nameWithLastName=name+" "+lastName;
+				
+				//System.out.println(lastNameWithName);
+				
+				addingTree.insert(nameWithLastName, person);
+				//addingTreeLastNames.insert(lastNameWithName, person);
 				
 
 				k++;
 			}
 			
 		}
-		//abecedaryTree.triggerSearch('A').getValue().print();
+		abecedaryTree.filt(2);
+		abecedaryTree.triggerSearch('C').getValue().print();
 
 	}
 	
@@ -246,14 +252,14 @@ public class Main extends Application{
 	
 	public static void pruebaTree() {
 		System.out.println("Select an option to do in your tree:");
-		int op;
+		/*int op;
 		do {
 			op=menu();
 			send(op);
-		}while(op!=0);
+		}while(op!=0);*/
 	}
 	
-	private static void send(int op) {
+	/*private static void send(int op) {
 		switch(op) {
 			case 1:
 				add();
@@ -269,7 +275,7 @@ public class Main extends Application{
 				break;
 		}
 		
-	}
+	}*/
 
 	/*private static void prube(Tree<?,?> t) {
 		t.triggerInorder();
@@ -294,14 +300,14 @@ public class Main extends Application{
 		
 	}*/
 
-	private static void add() {
+	/*private static void add() {
 		
 		System.out.println("Write the name");
 		String name= sc.nextLine();
 		AVLNode<Character,BRTree<String,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
 		AVLNode.getValue().insert(name, new Person(name,null, null, new Date(), 0, null));
 		
-	}
+	}*/
 	
 	public static int getRandom(int min, int max) {
 	    Random random = new Random();

@@ -64,7 +64,6 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 	
     @FXML
     void searchName(ActionEvent event) {
-    	nameData.filt(1);
     	ArrayList<Person> people = new ArrayList<>();
     	
     	String name = nameTF.getText();

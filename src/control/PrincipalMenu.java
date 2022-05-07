@@ -64,7 +64,7 @@ public class PrincipalMenu<K extends Comparable<K>, V> {
     @FXML
     void search(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/SearchWindow.fxml"));
-		loader.setController(new SearchWindow(this.nameData));
+		loader.setController(new SearchWindow<K, V>(this.nameData));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);

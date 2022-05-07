@@ -13,7 +13,8 @@ public class Person {
 	
 	
 	
-	public Person( String name, String lastname, Sex sex, Date date, double height, String nationality) {
+	public Person( String code ,String name, String lastname, Sex sex, Date date, double height, String nationality) {
+		this.code = code;
 		this.name = name;
 		this.lastname = lastname;
 		this.sex = sex;

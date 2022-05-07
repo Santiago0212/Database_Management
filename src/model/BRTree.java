@@ -253,17 +253,17 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 	    printBR(root.getLeft(), space);
 	}
 	public ArrayList<Person> findPersons(Character c, int op) {
-		return findPersons( c,  op, root);
+		ArrayList<Person> persons = new ArrayList<>();
+		return findPersons( c,  op, root,persons);
 	}
 	
-	private ArrayList<Person> findPersons(Character c, int op, BRNode<K, V> current) {
-		ArrayList<Person> persons = new ArrayList<>();
-		if (current == null) {
-			return null;
-		}
+	private ArrayList<Person> findPersons(Character c, int op, BRNode<K, V> current,ArrayList<Person> persons) {
+		if (current != null) {
+			
+		
 		// Recursivo
 
-		findPersons(c, op,current.getLeft());
+		findPersons(c, op,current.getLeft(),persons);
 		switch(op) {
 		case 1:
 			if(((Person)current.getValue()).getName().charAt(0)==c) {
@@ -276,7 +276,8 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 			}
 			break;
 	}
-		findPersons(c,op,current.getRight());
+		findPersons(c,op,current.getRight(),persons);
+		}
 		return persons;
 		
 	}

@@ -32,27 +32,30 @@ public class AVLTree<K extends Comparable <K>,V> {
 	
 			ArrayList<Person> persons = searchSim(c,root,op);
 					
-			for(Person p : persons)
-				addingTree.insert(p.getCode(), p);
+			for(Person p : persons) {
+				addingTree.insert(p.getLastname()+" "+p.getName(), p);
+				}
 		}
 		
 		this.root=(AVLNode<K, V>) newTree.getRoot();
 				
 	}
 		
-	
-	
 	private ArrayList<Person> searchSim(Character c, AVLNode<K, V> root2,int op) {
-		ArrayList<Person> persons;
-		if (root2 == null) {
-			return null;
-		}
+		return searchSim( c,  root2, op,new ArrayList<Person>());
+	}
+	
+	private ArrayList<Person> searchSim(Character c, AVLNode<K, V> root2,int op,ArrayList<Person> persons) {
+		if (root2 != null) {
+		
 		// Recursivo
 
-		inorder(root2.getLeft());
-		persons =((BRTree)root2.getValue()).findPersons(c,op);
-		inorder(root2.getRight());
+		searchSim(c,root2.getLeft(),op,persons);
+		persons.addAll(((BRTree)root2.getValue()).findPersons(c,op));
+		searchSim(c,root2.getRight(),op,persons);
+		}
 		return persons;
+
 	}
 	
 	protected void insert(AVLNode<K, V> AVLNode, AVLNode<K, V> current) {
@@ -165,7 +168,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 	    System.out.print("\n");
 	    for (int i = COUNT; i < space; i++)
 	        System.out.print(" ");
-	    System.out.print(root.getKey() + "\n");
+	    System.out.print(root.getKey()+" "+root.getValue() + "\n");
 	 
 	    // Process left child
 	    print(root.getLeft(), space);
