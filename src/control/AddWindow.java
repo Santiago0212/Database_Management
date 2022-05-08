@@ -20,10 +20,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import main.Main;
+import model.AVLTree;
+import model.BRTree;
 import model.Person;
 import model.Sex;
 
-public class AddWindow implements Initializable{
+public class AddWindow <K extends Comparable<K>,V>implements Initializable{
 
     @FXML
     private Button doneBTN;
@@ -45,11 +47,17 @@ public class AddWindow implements Initializable{
 
     @FXML
     private ChoiceBox<String> nationalityCB;
+    
+    private AVLTree<K, V> nameData;
+    
+    public AddWindow(AVLTree<K, V> nameData) {
+    	this.nameData = nameData;
+    }
 
     @FXML
     void done(ActionEvent event) throws IOException {
-    	String name=nameTF.getText();
-    	String lastName=lastaNameTF.getText();
+    	String name=nameTF.getText().toUpperCase();
+    	String lastName=lastaNameTF.getText().toUpperCase();
     	String sexString=sexCB.getValue();
     	LocalDate dateBirht=dateBirthDP.getValue();
     	String heightString=heightTF.getText();
@@ -69,8 +77,7 @@ public class AddWindow implements Initializable{
 		Date date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
     	
     	int code=Main.getCodeAux();
-    	
-    	System.out.println(code+""+"-"+name+"-"+lastName+"-"+sex+"-"+date+"-"+height+"-"+nationality);
+    
     	
     	Person person = new Person(code+"", name, lastName, sex, date, height, nationality);
     	
@@ -83,7 +90,7 @@ public class AddWindow implements Initializable{
     
     public void cerrar() throws IOException {
     	FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
-		loader.setController(new PrincipalMenu());
+		loader.setController(new PrincipalMenu<K, V>(this.nameData));
 		Parent parent = (Parent) loader.load();
 		Stage stage = new Stage();
 		Scene scene = new Scene(parent);

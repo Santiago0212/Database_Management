@@ -1,5 +1,6 @@
 package control;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,12 +10,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import main.Main;
 import model.AVLTree;
 import model.BRTree;
 import model.Person;
@@ -70,6 +76,9 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     
     @FXML
     private Button codeBTN;
+    
+    @FXML
+    private Button volverBTN;
     
     
     private AVLTree<K,V> data;
@@ -189,6 +198,21 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	}
     	
     	dataTable.refresh();
+    }
+    
+    @FXML
+    void volver(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/PrincipalMenu.fxml"));
+		loader.setController(new PrincipalMenu<K, V>(this.data));
+		Parent parent = (Parent) loader.load();
+		Stage stage = new Stage();
+		Scene scene = new Scene(parent);
+		stage.setTitle("AVL Tree Search");
+		stage.setScene(scene);
+		stage.show();
+		
+		Stage stage1 = (Stage) volverBTN.getScene().getWindow();
+	    stage1.close();
     }
     
 

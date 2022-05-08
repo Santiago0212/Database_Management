@@ -49,13 +49,13 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		
 		createTree();
-		new Thread(()->{
+		/*new Thread(()->{
 			try {
 				createCombinations();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}).start();
+		}).start();*/
 		
 		launch(args);
 	}
@@ -85,159 +85,12 @@ public class Main extends Application{
 		
 	}
 	
-	public static void createCombinations() throws IOException {
-		String[] names = importNames();
-		String[] lastNames = importLastNames();
-
-		int numI=1000;
-		int numJ=1000;
-		
-		int total=numI*numJ;
-		
-		String[ ] paises = new String[] {"Canada","Estados Unidos","Mexico","Belice","Costa rica","El Salvador",
-	    		"Guatemala","Honduras","Nicaragua","Panamá","Argentina","Bolivia","Brasil","Chile","Colombia","Ecuador",
-	    		"Paraguay","Peru","Surinam","Trinidad y Tobago","Uruguay","Venezuela","Antigua y Barbuda","Bahamas","Barbados",
-	    		"Cuba","Dominica","Granada","Guyana","Haiti","Jamaica","República Dominicana","San Cristóbal y Nieves","San Vicente y las Granadinas","Santa Lucia"};
-		double[] poblacionesDouble=new double[] {0.03*total,0.25*total,0.10*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.04*total,0.01*total,0.18*total,0.02*total,0.05*total,0.02*total,0.01*total,0.03*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total};
-	    int [] poblaciones=new int[poblacionesDouble.length];
-	    
-	    for(int i=0;i<poblaciones.length;i++) {
-	    	poblaciones[i]=(int) poblacionesDouble[i];
-	    }
-	   
-		int k = 0;
-		
-		for(int i = 0; i<numI; i++) {
-			for(int j = 0; j<numJ; j++) {
-				String name = names[i].split(",")[0];
-				String sexString = names[i].split(",")[1];
-				String lastName = lastNames[j];
-				String code = k+"";
-				
-				//System.out.println(name);
-				
-				if(name!=null && sexString!=null && lastName!=null && code!=null) {
-					
-					Sex sex = null;
-					if(sexString.equalsIgnoreCase("BOY")) {
-						sex = Sex.MALE;
-					} else if(sexString.equalsIgnoreCase("GIRL")) {
-						sex = Sex.FEMALE;
-					}
-					
-					LocalDate startDate = LocalDate.of(1990, 1, 1);
-				    long start = startDate.toEpochDay();
-				    LocalDate endDate = LocalDate.now();
-				    long end = endDate.toEpochDay();
-				    ZoneId defaultZoneId = ZoneId.systemDefault();
-				    long randomEpochDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
-				    Date date = Date.from(LocalDate.ofEpochDay(randomEpochDay).atStartOfDay(defaultZoneId).toInstant());
-				    
-				    double randomHeight=getRandom(100,210);
-				    randomHeight=randomHeight/100;
-				    String nationality="";
-				    if(total>100) {
-				    	boolean out=false;
-					    while(!out) {
-					    	int randomNationality=getRandom(1, 35);
-					    	if(poblaciones[randomNationality]>0) {
-					    		nationality=paises[randomNationality];
-					    		out=true;
-					    	}
-					    }
-				    }else {
-				    	int randomNationality=getRandom(1, 35);
-				    	nationality=paises[randomNationality];
-				    }
-				    
-					
-					Person person = new Person(k+"", name, lastName, sex, date, randomHeight, nationality);
-					
-					addPerson(k,person);
-		
-					k++;
-					codeAux=k;
-					
-				}
-			}
-		}
-
-	}
 	public static void addPerson(int k,Person person) {
-		Character initialNameAUx = person.getName().charAt(0);
-		
-		Character initialName=Character.toUpperCase(initialNameAUx);
-
+		Character initialName = person.getName().charAt(0);
 		
 		BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
 		
-		
-
 		addingTree.insert(k, person);
-	}
-	
-	public static String[] importNames() throws IOException {
-		String path = "means/babynames-clean.csv";
-		
-		String[] namesList = new String[1000];
-		
-		File names = new File(path);
-		
-		if(names.exists()) {
-			FileReader fr = new FileReader(path);
-			BufferedReader br = new BufferedReader(fr);
-			
-			String line;
-			
-			int i = 0;
-			boolean finished = false;
-			
-			while((line = br.readLine())!=null && !finished) {
-				if(i<1000) {
-					namesList[i] = line.toUpperCase();
-				}
-				i++;
-			}
-			
-			if (br != null)br.close();
-            if (fr != null)fr.close();
-			
-		}
-		
-		return namesList;
-		
-	}
-	
-	public static String[] importLastNames() throws IOException {
-		String path = "means/Names_2010Census.csv";
-		
-		String[] lastNamesList = new String[1000];
-		
-		File names = new File(path);
-		
-		if(names.exists()) {
-			FileReader fr = new FileReader(path);
-			BufferedReader br = new BufferedReader(fr);
-			
-			String line;
-			
-			int i = 0;
-			boolean finished = false;
-			
-			while((line = br.readLine())!=null && !finished) {
-				if(i<1000 && i>0) {
-					String[] data = line.split(",");
-					lastNamesList[i] = data[0];
-				}
-				i++;
-			}
-			
-			if (br != null)br.close();
-            if (fr != null)fr.close();
-			
-		}
-		
-		return lastNamesList;
 	}
 
 	public static void pruebaTree() {
@@ -296,11 +149,6 @@ public class Main extends Application{
 		AVLNode<Character,BRTree<Integer,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
 	/*	AVLNode.getValue().insert(, new Person("",name,null, null, new Date(), 0, null));*/
 		
-	}
-	
-	public static int getRandom(int min, int max) {
-	    Random random = new Random();
-	    return random.nextInt(max - min) + min;
 	}
 	
 	private static int menu() {
