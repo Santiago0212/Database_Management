@@ -98,7 +98,16 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 
     @FXML
     void borrar(ActionEvent event) {
-
+    	
+    	String name = nameTF.getText().toUpperCase();
+    	
+    	Character initial = name.charAt(0);
+    	
+    	BRTree<K,V> namesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
+    	
+    	namesTree.triggerDelete(Integer.parseInt(stClicked.getCode()));
+    	
+    	System.out.println("se borro");
     }
 
     @FXML
