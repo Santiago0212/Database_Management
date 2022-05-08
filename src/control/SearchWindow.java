@@ -148,7 +148,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	
     	ArrayList<Person> people = new ArrayList<>();
     	
-    	String code = codeTF.getText().toUpperCase();
+    	String code = codeTF.getText();
     	
     	Character initial = BRTree.changeToWords(code).charAt(0);
     
