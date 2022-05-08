@@ -30,6 +30,10 @@ public class PrincipalMenu<K extends Comparable<K>, V> {
     
     private AVLTree<K, V> nameData;
     
+    public PrincipalMenu() {
+    	
+    }
+    
     public PrincipalMenu(AVLTree<K, V> nameData) {
     	this.nameData = nameData;
     }

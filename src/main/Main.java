@@ -28,7 +28,24 @@ public class Main extends Application{
 
 	static AVLTree<Character,BRTree<Integer,Person>> abecedaryTree = new AVLTree <Character,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
+	static int codeAux;
 	
+	public static AVLTree<Character, BRTree<Integer, Person>> getAbecedaryTree() {
+		return abecedaryTree;
+	}
+
+	public static void setAbecedaryTree(AVLTree<Character, BRTree<Integer, Person>> abecedaryTree) {
+		Main.abecedaryTree = abecedaryTree;
+	}
+
+	public static int getCodeAux() {
+		return codeAux;
+	}
+
+	public static void setCodeAux(int codeAux) {
+		Main.codeAux = codeAux;
+	}
+
 	public static void main(String[] args) {
 		
 		createTree();
@@ -136,21 +153,27 @@ public class Main extends Application{
 					
 					Person person = new Person(k+"", name, lastName, sex, date, randomHeight, nationality);
 					
-					Character initialName = person.getName().charAt(0); 
-
-					
-					BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
-					
-					
-
-					addingTree.insert(k, person);
-
+					addPerson(k,person);
 		
 					k++;
+					codeAux=k;
+					
 				}
 			}
 		}
 
+	}
+	public static void addPerson(int k,Person person) {
+		Character initialNameAUx = person.getName().charAt(0);
+		
+		Character initialName=Character.toUpperCase(initialNameAUx);
+
+		
+		BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
+		
+		
+
+		addingTree.insert(k, person);
 	}
 	
 	public static String[] importNames() throws IOException {
