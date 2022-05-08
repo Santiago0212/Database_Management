@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.Main;
 import model.AVLTree;
@@ -83,8 +85,35 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     
     private AVLTree<K,V> data;
     
+    private Person stClicked;
     
     private ObservableList obs;;
+    
+    @FXML
+    private Button modificarBTN;
+
+    @FXML
+    private Button borrarBTN;
+
+
+    @FXML
+    void borrar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void modificar(ActionEvent event) throws IOException {
+    	if(stClicked!=null) {
+    		FXMLLoader loader = new FXMLLoader(Main.class.getResource("../ui/Modify.fxml"));
+    		loader.setController(new Modify<K, V>(stClicked,this.data));
+    		Parent parent = (Parent) loader.load();
+    		Stage stage = new Stage();
+    		Scene scene = new Scene(parent);
+    		stage.setTitle("AVL Tree Search");
+    		stage.setScene(scene);
+    		stage.show();
+    	}
+    }
     
     public SearchWindow(AVLTree<K,V> data) {
     	this.data = data;
@@ -105,6 +134,10 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 		heightC.setCellValueFactory(new PropertyValueFactory<Person,Double>("height"));
 		
 		dataTable.setItems(obs);
+		
+		dataTable.setOnMouseClicked(event -> {
+			stClicked = dataTable.getSelectionModel().getSelectedItem();
+		});
 	}
 	
     @FXML

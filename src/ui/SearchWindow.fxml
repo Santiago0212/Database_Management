@@ -104,5 +104,7 @@
         </columns>
       </TableView>
       <Button fx:id="volverBTN" layoutX="689.0" layoutY="36.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+      <Button fx:id="modificarBTN" layoutX="586.0" layoutY="215.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
+      <Button fx:id="borrarBTN" layoutX="663.0" layoutY="215.0" mnemonicParsing="false" onAction="#borrar" text="Borrar" />
    </children>
 </AnchorPane>
