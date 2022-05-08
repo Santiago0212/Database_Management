@@ -26,20 +26,19 @@ import model.BRTree;
 
 public class Main extends Application{
 
-	static AVLTree<Integer, String> tree = new AVLTree<Integer, String>();
 	static AVLTree<Character,BRTree<Integer,Person>> abecedaryTree = new AVLTree <Character,BRTree<Integer,Person>>();
 	static Scanner sc =new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
 		createTree();
-		/*new Thread(()->{*/
+		new Thread(()->{
 			try {
 				createCombinations();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		/*}).start();*/
+		}).start();
 		
 		launch(args);
 	}
@@ -85,10 +84,8 @@ public class Main extends Application{
 		double[] poblacionesDouble=new double[] {0.03*total,0.25*total,0.10*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.04*total,0.01*total,0.18*total,0.02*total,0.05*total,0.02*total,0.01*total,0.03*total,0.01*total,0.01*total,0.01*total,0.02*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total,0.01*total};
 	    int [] poblaciones=new int[poblacionesDouble.length];
 	    
-	    int totalx=0;
 	    for(int i=0;i<poblaciones.length;i++) {
 	    	poblaciones[i]=(int) poblacionesDouble[i];
-	    	totalx+=poblaciones[i];
 	    }
 	   
 		int k = 0;
@@ -136,34 +133,23 @@ public class Main extends Application{
 				    	nationality=paises[randomNationality];
 				    }
 				    
-				    
-				   //System.out.println(name+","+lastName+","+sex+","+date+","+randomHeight+","+nationality);
 					
 					Person person = new Person(k+"", name, lastName, sex, date, randomHeight, nationality);
 					
 					Character initialName = person.getName().charAt(0); 
-					//Character initialLastName = person.getLastname().charAt(0); 
-					
-					//System.out.println(initialLastName+" inicial");
+
 					
 					BRTree<Integer, Person> addingTree = abecedaryTree.triggerSearch(initialName).getValue();
-					//BRTree<String, Person> addingTreeLastNames = abecedaryTreeLastNames.triggerSearch(initialLastName).getValue();
 					
-		
-					String nameWithLastName=name+" "+lastName;
 					
-					//System.out.println(lastNameWithName);
-					//System.out.println(k);
+
 					addingTree.insert(k, person);
-					//addingTreeLastNames.insert(lastNameWithName, person);
-					
+
 		
 					k++;
 				}
 			}
 		}
-		//abecedaryTree.filt(2);
-		//abecedaryTree.triggerSearch('A').getValue().print();
 
 	}
 	
