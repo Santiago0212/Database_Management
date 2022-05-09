@@ -10,101 +10,122 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="728.0" prefWidth="1139.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="996.0" style="-fx-background-color: #6A95FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane layoutX="55.0" layoutY="48.0" prefHeight="407.0" prefWidth="507.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="165.0" prefWidth="507.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Name">
+          <Tab style="-fx-background-color: #D4E0F0;" text="Name">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="923.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="26.0" text="Search by name:">
+                        <Label layoutX="14.0" layoutY="35.0" style="-fx-background-color: #FFFF;" text="Search by name:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="nameTF" layoutX="14.0" layoutY="65.0" prefHeight="41.0" prefWidth="313.0">
+                        <TextField fx:id="nameTF" layoutX="14.0" layoutY="65.0" prefHeight="39.0" prefWidth="306.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="searchNameBTN" layoutX="352.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchName" prefHeight="44.0" prefWidth="70.0" text="Buscar" />
+                        <Button fx:id="searchNameBTN" layoutX="353.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchName" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #D4E0F0;" text="Buscar">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font></Button>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Last Name">
+          <Tab style="-fx-background-color: #D4E0F0;" text="Last Name">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="26.0" text="Search by last name:">
+                        <Label layoutX="14.0" layoutY="35.0" style="-fx-background-color: #FFFF;" text="Search by last name:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="lastNameTF" layoutX="14.0" layoutY="65.0" prefHeight="44.0" prefWidth="261.0">
+                        <TextField fx:id="lastNameTF" layoutX="14.0" layoutY="65.0" prefHeight="44.0" prefWidth="287.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="lastNameBTN" layoutX="320.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchLastName" prefHeight="41.0" prefWidth="76.0" text="Buscar" />
+                        <Button fx:id="lastNameBTN" layoutX="320.0" layoutY="67.0" mnemonicParsing="false" onAction="#searchLastName" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #D4E0F0;" text="Buscar">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font></Button>
                      </children>
                   </AnchorPane>
                </content>
           </Tab>
-            <Tab text="Complete Name">
+            <Tab style="-fx-background-color: #D4E0F0;" text="Complete Name">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="26.0" text="Search by complete name:">
+                        <Label layoutX="18.0" layoutY="35.0" style="-fx-background-color: #FFFF;" text="Search by complete name:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="completeNameTF" layoutX="14.0" layoutY="65.0" prefHeight="44.0" prefWidth="241.0">
+                        <TextField fx:id="completeNameTF" layoutX="18.0" layoutY="65.0" prefHeight="44.0" prefWidth="307.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="completeNameBTN" layoutX="352.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchCompleteName" prefHeight="44.0" prefWidth="81.0" text="Code" />
+                        <Button fx:id="completeNameBTN" layoutX="353.0" layoutY="68.0" mnemonicParsing="false" onAction="#searchCompleteName" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #D4E0F0;" text="Buscar">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font></Button>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Code">
+            <Tab style="-fx-background-color: #D4E0F0;" text="Code">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="26.0" text="Search by code:">
+                        <Label layoutX="14.0" layoutY="36.0" style="-fx-background-color: #FFFF;" text="Search by code:">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="codeTF" layoutX="14.0" layoutY="65.0" prefHeight="41.0" prefWidth="313.0">
+                        <TextField fx:id="codeTF" layoutX="14.0" layoutY="66.0" prefHeight="39.0" prefWidth="313.0">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="codeBTN" layoutX="359.0" layoutY="65.0" mnemonicParsing="false" onAction="#searchCode" prefHeight="54.0" prefWidth="82.0" text="Buscar" />
+                        <Button fx:id="codeBTN" layoutX="354.0" layoutY="68.0" mnemonicParsing="false" onAction="#searchCode" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: #D4E0F0;" text="Buscar">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font></Button>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
-      <TableView fx:id="dataTable" layoutX="14.0" layoutY="252.0" prefHeight="456.0" prefWidth="1112.0">
+      <TableView fx:id="dataTable" layoutX="17.0" layoutY="177.0" prefHeight="456.0" prefWidth="962.0">
         <columns>
-          <TableColumn fx:id="nameC" prefWidth="137.0" text="Name" />
-          <TableColumn fx:id="lastNameC" prefWidth="118.0" text="Last Name" />
-            <TableColumn fx:id="codeC" prefWidth="175.0" text="Code" />
-            <TableColumn fx:id="sexC" prefWidth="175.0" text="Sex" />
-            <TableColumn fx:id="dateC" prefWidth="175.0" text="Birth Date" />
-            <TableColumn fx:id="nationalityC" prefWidth="175.0" text="Nationality" />
-            <TableColumn fx:id="heightC" prefWidth="175.0" text="Height" />
+          <TableColumn fx:id="nameC" prefWidth="137.0" style="-fx-background-color: #D4E0F0;" text="Name" />
+          <TableColumn fx:id="lastNameC" prefWidth="138.0" style="-fx-background-color: #D4E0F0;" text="Last Name" />
+            <TableColumn fx:id="codeC" prefWidth="92.0" style="-fx-background-color: #D4E0F0;" text="Code" />
+            <TableColumn fx:id="sexC" prefWidth="139.0" style="-fx-background-color: #D4E0F0;" text="Sex" />
+            <TableColumn fx:id="dateC" prefWidth="217.0" style="-fx-background-color: #D4E0F0;" text="Birth Date" />
+            <TableColumn fx:id="nationalityC" prefWidth="134.0" style="-fx-background-color: #D4E0F0;" text="Nationality" />
+            <TableColumn fx:id="heightC" prefWidth="103.0" style="-fx-background-color: #D4E0F0;" text="Height" />
         </columns>
       </TableView>
-      <Button fx:id="volverBTN" layoutX="689.0" layoutY="36.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
-      <Button fx:id="modificarBTN" layoutX="586.0" layoutY="215.0" mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-      <Button fx:id="borrarBTN" layoutX="663.0" layoutY="215.0" mnemonicParsing="false" onAction="#borrar" text="Borrar" />
+      <Button fx:id="volverBTN" layoutX="907.0" layoutY="14.0" mnemonicParsing="false" onAction="#volver" style="-fx-background-color: #D4E0F0;" text="Volver">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="modificarBTN" layoutX="781.0" layoutY="126.0" mnemonicParsing="false" onAction="#modificar" style="-fx-background-color: #D4E0F0;" text="Modificar">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button fx:id="borrarBTN" layoutX="898.0" layoutY="126.0" mnemonicParsing="false" onAction="#borrar" prefHeight="39.0" prefWidth="81.0" style="-fx-background-color: #D4E0F0;" text="Borrar">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font></Button>
    </children>
 </AnchorPane>
