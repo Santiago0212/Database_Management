@@ -13,6 +13,10 @@ public class BRNode<K extends Comparable<K>,V> extends AVLNode<K,V>{
 		color = Color.RED;
 	}
 	
+	public BRNode() {
+		super(null, null);
+	}
+
 	@Override
 	public BRNode<K, V> getDad() {
 		return dad;

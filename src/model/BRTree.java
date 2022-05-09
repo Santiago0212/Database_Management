@@ -153,6 +153,26 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		return codes;
 	}
 	
+	public BRNode<K,V> searchCodeNode(String code) {
+		BRNode<K, V> k = new BRNode<K, V>();
+		k = searchCodeNode(root, code,k);
+		k.setValue(null);
+		return k;
+	}
+	
+	private BRNode<K,V> searchCodeNode(BRNode<K, V> current, String code,BRNode<K, V> node) {
+		if (current != null) {
+			node = searchCodeNode(current.getLeft(),code,node);
+			Person p= (Person)current.getValue();
+			if(p.getCode().equals(code))
+				node = current;
+			node =searchCodeNode(current.getRight(),code,node);
+		
+		}
+		
+		return node;
+	}
+	
 	public void inorder(AVLNode<K, V> AVLNode) {
 		// Caso base
 		if (AVLNode == null) {
@@ -314,8 +334,13 @@ protected BRNode<K, V> leftRotateBR(BRNode<K, V> node) {
 		return findPersons( c,  op, root,persons);
 	}
 	
+	public void delete(Person p) {
+		
+		searchCodeNode(p.getCode()).setValue(null);
+	}
+	
 	private ArrayList<Person> findPersons(Character c, int op, BRNode<K, V> current,ArrayList<Person> persons) {
-		if (current != null) {
+		if (current != null&&current.getValue()!=null) {
 			
 		
 		// Recursivo
