@@ -3,7 +3,7 @@ package model;
 public class AVLNode <K extends Comparable <K>,V>implements Comparable<AVLNode<K,V>>{
 	
 	private K key;
-	private V value;
+	protected V value;
 	private boolean looked;
 	
 

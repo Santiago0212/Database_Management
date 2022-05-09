@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 public class AVLTree<K extends Comparable <K>,V> {
 
 	protected AVLNode<K,V> root;
+	public int filt;
 	private final static int COUNT = 15;
 	private Character[] alphabet = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',};
 
@@ -28,7 +29,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		
 		int k=0;
 		
-		
+		filt=op;
 			for(Character c : alphabet) {
 				BRTree<Integer, Person> addingTree = newTree.triggerSearch(c).getValue();
 		
@@ -83,7 +84,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		}
 	}
 
-	// El activador del mÃ©todo recursivo
+	// El activador del método recursivo
 	public void triggerInorder() {
 		inorder(root);
 	}

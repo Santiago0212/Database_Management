@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -99,18 +100,36 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
 
     @FXML
     void borrar(ActionEvent event) {
+    	Character initial = 0;
+    	if(data.filt==1) {
+    		String name = stClicked.getName();
+        	
+        	initial = name.charAt(0);
+        	
+    	}else if(data.filt==2) {
+    		String lastName =  stClicked.getLastname();
     	
-    	String name = nameTF.getText().toUpperCase();
-    	
-    	Character initial = name.charAt(0);
+    		initial = lastName.charAt(0);
+       	 
+    	}else {
+    		String code =  stClicked.getLastname();
+        	
+    		initial = BRTree.changeToWords(code).charAt(0);
+    	}
     	
     	BRTree<K,V> namesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
     	
-    	namesTree.triggerDelete(Integer.parseInt(stClicked.getCode()));
+    	namesTree.delete(stClicked);
     	
-    	//Aquiiiii necesito ayudaaaaaaaaaaaaaaaaaaaaaaaaa
+    	dataTable.refresh();
     	
-    	System.out.println("se borro");
+    	
+    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Persona eliminada");
+        alert.setTitle("Info");
+        alert.setContentText("Persona eliminada con exito, actualiza la busqueda por favor.");
+        alert.showAndWait();
+    	
     }
 
     @FXML

@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -79,10 +80,24 @@ public class AddWindow <K extends Comparable<K>,V>implements Initializable{
     	int code=Main.getCodeAux();
     
     	
-    	Person person = new Person(code+"", name, lastName, sex, date, height, nationality);
     	
-    	Main.addPerson(code, person);
     	
+    	try {
+    		Person person = new Person(code+"", name, lastName, sex, date, height, nationality);
+    		Main.addPerson(code, person);
+    	}catch(Exception e){
+    		Alert alert = new Alert(Alert.AlertType.ERROR);
+    	    alert.setHeaderText(null);
+    	    alert.setTitle("Error");
+    	    alert.setContentText("No se puede generar sin rellanar todos los datos.");
+    	    alert.showAndWait();
+    	}finally {
+    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Listo");
+            alert.setTitle("Info");
+            alert.setContentText("Persona agregada exitosamente.");
+            alert.showAndWait();
+    	}
     	Main.setCodeAux(code+1);
     	
     	cerrar();
