@@ -108,7 +108,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     		initial = lastName.charAt(0);
        	 
     	}else {
-    		String code =  stClicked.getLastname();
+    		String code =  stClicked.getCode();
         	
     		initial = BRTree.changeToWords(code).charAt(0);
     	}
