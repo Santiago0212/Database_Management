@@ -1,11 +1,5 @@
 package main;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import control.PrincipalMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +7,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Person;
-import model.Sex;
 import model.AVLNode;
 import model.AVLTree;
-import java.util.Date;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 import model.BRTree;
 
@@ -105,7 +95,7 @@ public class Main extends Application{
 	private static void send(int op) {
 		switch(op) {
 			case 1:
-				add();
+				//add();
 				break;
 			case 2:
 				//delete();
@@ -143,13 +133,12 @@ public class Main extends Application{
 		
 	}*/
 
-	private static void add() {
+	/*private static void add() {
 		System.out.println("Write the name");
 		String name= sc.nextLine();
 		AVLNode<Character,BRTree<Integer,Person>> AVLNode = abecedaryTree.triggerSearch(name.charAt(0));
 	/*	AVLNode.getValue().insert(, new Person("",name,null, null, new Date(), 0, null));*/
 		
-	}
 	
 	private static int menu() {
 		System.out.println("1: For add a AVLNode\n"+"2: For delete a AVLNode\n"+

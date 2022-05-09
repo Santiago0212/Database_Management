@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import javafx.event.ActionEvent;
-
 public class AVLTree<K extends Comparable <K>,V> {
 
 	protected AVLNode<K,V> root;
@@ -56,7 +54,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		// Recursivo
 
 		searchSim(c,root2.getLeft(),op,persons);
-		persons.addAll(((BRTree)root2.getValue()).findPersons(c,op));
+		persons.addAll(((BRTree<K, V>)root2.getValue()).findPersons(c,op));
 		searchSim(c,root2.getRight(),op,persons);
 		}
 		return persons;

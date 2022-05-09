@@ -3,13 +3,11 @@ package control;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,11 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.Main;
 import model.AVLTree;
-import model.BRNode;
 import model.BRTree;
 import model.Person;
 
@@ -88,7 +84,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     
     private Person stClicked;
     
-    private ObservableList obs;;
+    private ObservableList<Person> obs;
     
     @FXML
     private Button modificarBTN;
@@ -169,6 +165,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     void searchName(ActionEvent event) {
     	dataTable.getItems().clear();
     	
+    	if(data.filt!=1)
     	data.filt(1);
     	
     	ArrayList<Person> people = new ArrayList<>();
@@ -190,6 +187,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     void searchLastName(ActionEvent event) {
     	dataTable.getItems().clear();
     	
+    	if(data.filt!=2)
     	data.filt(2);
     	
     	ArrayList<Person> people = new ArrayList<>();
@@ -211,6 +209,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     void searchCode(ActionEvent event) {
     	dataTable.getItems().clear();
     	
+    	if(data.filt!=3)
     	data.filt(3);
     	
     	ArrayList<Person> people = new ArrayList<>();
@@ -232,6 +231,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     void searchCompleteName(ActionEvent event) {
     	dataTable.getItems().clear();
     	
+    	if(data.filt!=1)
     	data.filt(1);
     	
     	ArrayList<Person> people = new ArrayList<>();
