@@ -82,7 +82,7 @@ public class AVLTree<K extends Comparable <K>,V> {
 		}
 	}
 
-	// El activador del mÃ©todo recursivo
+	// El activador del método recursivo
 	public void triggerInorder() {
 		inorder(root);
 	}

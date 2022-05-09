@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -84,7 +85,7 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     
     private Person stClicked;
     
-    private ObservableList<Person> obs;
+    private ObservableList<Person> obs;;
     
     @FXML
     private Button modificarBTN;
@@ -115,11 +116,16 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	BRTree<K,V> namesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
     	
     	namesTree.delete(stClicked);
-    	//Aquiiiii necesito ayudaaaaaaaaaaaaaaaaaaaaaaaaa
-    	
-    	//System.out.println("se borro");
     	
     	dataTable.refresh();
+    	
+    	
+    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Persona eliminada");
+        alert.setTitle("Info");
+        alert.setContentText("Persona eliminada con exito, actualiza la busqueda por favor.");
+        alert.showAndWait();
+    	
     }
 
     @FXML

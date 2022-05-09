@@ -9,6 +9,9 @@ these records of people in accordance with special conditions.
 The program simulates a database and allows you to efficiently manage CRUD operations.
 
 The members of the project are:
-Jhonatan Castano Ibarra
-sebastian lopez garcia
-Santiago Barraza Sinning
+
+#Jhonatan Castano Ibarra
+
+#sebastian lopez garcia
+
+#Santiago Barraza Sinning
