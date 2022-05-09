@@ -2,8 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
+
+
 public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 	BRNode<K,V> root;
+	
+	
 	@Override
 	public void insert(K key, V value) {
 		BRNode<K,V> node = new BRNode<K,V>(key,value);
@@ -92,6 +96,7 @@ public class BRTree<K extends Comparable<K>,V> extends AVLTree<K,V>{
 		}
 
 	}
+	
 	
 	public ArrayList<V> searchAllNames(String name) {
 		ArrayList<V> names = new ArrayList<V>();

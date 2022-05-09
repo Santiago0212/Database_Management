@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.Main;
 import model.AVLTree;
+import model.BRNode;
 import model.BRTree;
 import model.Person;
 
@@ -106,6 +107,8 @@ public class SearchWindow <K extends Comparable<K>,V>implements Initializable{
     	BRTree<K,V> namesTree = (BRTree<K, V>) data.triggerSearch((K) initial).getValue();
     	
     	namesTree.triggerDelete(Integer.parseInt(stClicked.getCode()));
+    	
+    	//Aquiiiii necesito ayudaaaaaaaaaaaaaaaaaaaaaaaaa
     	
     	System.out.println("se borro");
     }
